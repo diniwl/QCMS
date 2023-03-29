@@ -1,14 +1,12 @@
 from django.shortcuts import render, redirect
 from .forms import SignUpForm, LoginForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout as django_logout
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
 from .models import Schedule
 from .forms import Scheduleform
-
-# Import class 
-from .models import Schedule
 
 # Create your views here.
 
@@ -49,9 +47,11 @@ def view_login(request):
             msg = 'Sign in error'
     return render(request, 'myapp/login.html', {'form': form, 'msg': msg})
 
+@login_required
 def home(request):
+    schedule  = Schedule.objects.filter(user=request.user)
     return render(request, 'myapp/homepage.html', {
-        'schedule': Schedule.objects.all()
+        'schedule': schedule
     })
 
 def homefismed(request):
@@ -70,6 +70,7 @@ def view_schedule(request, id):
     schedule = Schedule.objects.get(pk=id)
     return HttpResponseRedirect(reverse('home'))
 
+@login_required
 def add(request):
     if request.method == 'POST':
         form = Scheduleform(request.POST)
@@ -80,6 +81,7 @@ def add(request):
             new_location = form.cleaned_data['location']
 
             new_schedule = Schedule(
+                user=request.user,
                 task_date = new_task_date,
                 task = new_task,
                 machine = new_machine,
@@ -118,3 +120,7 @@ def delete(request, id):
         schedule = Schedule.objects.get(pk=id)
         schedule.delete()
     return HttpResponseRedirect(reverse('home'))
+
+def logout(request):
+    django_logout(request)
+    return HttpResponseRedirect(reverse('index'))

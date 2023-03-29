@@ -11,6 +11,7 @@ class User(AbstractUser):
     institute_name = models.CharField(max_length=150, null=True)
 
 class Schedule(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     task_date = models.DateField(null=True)
     task = models.CharField(max_length=150)
     machine = models.CharField(max_length=150)

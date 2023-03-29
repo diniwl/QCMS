@@ -1,0 +1,63 @@
+#title {
+    background-color: #fff;
+    color: #0d6efd;
+}
+
+
+.container-fluid {
+    padding: 3% 15%;
+}
+
+h1 {
+    font-size: 3.5rem;
+    line-height: 1.5;
+    font-weight: bold;
+}
+
+.img-vector {
+    width: 25%;
+    margin-left: 100px;
+    position: absolute;
+}
+
+.navbar {
+    padding-bottom: 4.5rem;
+}
+
+.navbar-brand {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.nav-item {
+    padding: 0 18px;
+}
+
+.nav-link {
+    font-size: 1.2rem;
+    font-weight: 'lighter';
+}
+
+.auth-button {
+    margin: 5% 3% 5% 0;
+}
+
+#features {
+    padding: 7% 15%;
+    background-color: #0d6efd;
+    /* position: relative;
+    z-index: 1; */
+}
+
+h3 {
+    font-weight: 700;
+}
+
+p {
+    color: #fff;
+}
+
+.feature-box {
+    text-align: center;
+    padding: 5%
+}
