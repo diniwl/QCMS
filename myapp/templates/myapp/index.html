@@ -1,5 +1,4 @@
 {% load static %}
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -8,86 +7,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>X-Ray QC Management System</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'css/index_styles.css' %}">
-    <!-- BOOTSTRAP -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Ubuntu&display=swap"
+        rel="stylesheet">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <!-- FontAwesome -->
+    <link rel="stylesheet" href="{% static 'css/index_styles.css' %}">
+
     <link rel="stylesheet" href="https://kit.fontawesome.com/9a207e2b08.css" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/9a207e2b08.js" crossorigin="anonymous"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
     <section id="title">
+
         <div class="container-fluid">
+
             <nav class="navbar navbar-expand-lg navbar-dark">
-                <a href="" class="navbar-brand">QCMS</a>
+                <a class="navbar-brand" href="">QCMS</a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
-                    aria-label="Toggle Navigation">
-                    <span class="navbar-toggler-icon"></span></button>
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-primary" href="">About</a>
+                            <a class="nav-link" href="#footer">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-primary" href="">Register</a>
+                            <a class="nav-link" href="#{% url 'register' %}">Register</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-primary" href="">Features</a>
+                            <a class="nav-link" href="{% url 'view_login' %}">Login</a>
                         </li>
                     </ul>
                 </div>
             </nav>
 
+
+
             <div class="row">
 
                 <div class="col-lg-6">
-                    <h1>Welcome to X-ray <br> Quality Control
-                        <br> Management System
-                    </h1>
-                    <a href="{% url 'register' %}" class="btn btn-outline-primary btn-lg auth-button">Sign Up</a>
-                    <a href="{% url 'view_login' %}" class="btn btn-outline-primary btn-lg auth-button">Log In</a>
+                    <h1>Seamlessly manage your X-ray QC Program.</h1>
+                    <a href="{% url 'register' %}" class="btn btn-dark btn-lg download-button">Sign Up</a>
+                    <a href="{% url 'view_login' %}" class="btn btn-light btn-lg download-button">Log In</a>
                 </div>
 
                 <div class="col-lg-6">
-                    <img class="img-vector" src="{% static 'media/image2.png' %}" alt="img">
+                    <img class="img-mockup" src="{% static 'media/image3.png' %}" alt="iphone-mockup">
                 </div>
-
             </div>
         </div>
     </section>
 
-    <section id="features">
-        <div class="row">
-            <div class="feature-box col-lg-4 col-md-12">
-                <h3>Easy to use</h3>
-                <p>Lorem ipsum</p>
-            </div>
+    <footer id="footer">
+        <img class="logopoltek" src="{% static 'media/logopoltek.png' %}" alt="logopoltek">
+        <p>© Copyright Dini Wulandari</p>
+        <p>P22030119013</p>
+        <p>D-IV Teknologi Rekayasa Elektromedis</p>
 
-            <div class="feature-box col-lg-4 col-md-12">
-                <h3>No-paper workflow</h3>
-                <p>Lorem ipsum</p>
-            </div>
-
-            <div class="feature-box col-lg-4 col-md-12">
-                <h3>Clean UI</h3>
-                <p>Lorem ipsum</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
-        crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </footer>
 </body>
 
 </html>
