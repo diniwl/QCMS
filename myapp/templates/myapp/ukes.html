@@ -3,12 +3,13 @@
 {% block body %}
 <!-- 
     Forms -->
-<h3 class="m-4">Jadwal</h3>
+<h3 class="m-4">Uji Kesesuaian</h3>
 <div class="row">
     <div class="col-12">
-        <a href="{% url 'add' %}" class="btn btn-primary ms-4 me-4 mb-4">Create New</a>
+        <a href="{% url 'add_ukes' %}" class="btn btn-primary ms-4 me-4 mb-4">Create New</a>
+        <a href="" class="btn btn-primary ms-4 me-4 mb-4">Sertifikat</a>
         <!-- Check if there's data in database -->
-        {% if schedule %}
+        {% if ukes %}
         <div class="card bg-secondary ms-4 me-4 mb-4">
             <div class="card-body">
                 <p class="card-text">
@@ -17,36 +18,41 @@
                         <thead>
                             <tr>
                                 <th scope="col">Date</th>
-                                <th scope="col">Task</th>
                                 <th scope="col">Machine</th>
                                 <th scope="col">Location</th>
-                                <th scope="col">Reminder</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="myTable">
-                            {% for schedule in schedule %}
+                            {% for ukes in ukes %}
                             <tr>
                                 <!-- from models.py -->
-                                <td>{{schedule.task_date}}</td>
-                                <td>{{schedule.task}}</td>
-                                <td>{{schedule.machine}}</td>
-                                <td>{{schedule.location}}</td>
-                                <td>Reminder</td>
+                                <td>{{ukes.task_date}}</td>
+                                <td>{{ukes.machine}}</td>
+                                <td>{{ukes.location}}</td>
+                                <td> {% if ukes.is_passed %}
+                                    <strong>Passed</strong>
+                                    {% elif ukes.is_failed %}
+                                    <strong>Failed</strong>
+                                    {% else %}
+                                    <strong>Pending</strong>
+                                    {% endif %}
+                                </td>
                                 <td>
                                     <button type="button" class="btn btn-success me-1"
-                                        href="{% url 'view_schedule' schedule.id %}" data-bs-toggle="modal"
-                                        data-bs-target="#myModal{{schedule.id}}">
+                                        href="{% url 'view_ukes' ukes.id %}" data-bs-toggle="modal"
+                                        data-bs-target="#myModal{{ukes.id}}">
                                         <i class="fa-solid fa-circle-info fa-lg"></i></button>
                                     <!-- 
                                                 Modal View Schedule -->
-                                    <div class="modal" id="myModal{{schedule.id}}" tabindex="-1"
+                                    <div class="modal" id="myModal{{ukes.id}}" tabindex="-1"
                                         aria-labelledby="myModalLabel1" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">
-                                                        Scheduled Date: {{schedule.task_date}}
+                                                        Submit Date: {{ukes.task_date}}
                                                     </h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close">
@@ -55,10 +61,18 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <ul class="list-unlysted">
-                                                        <li>Date: <strong>{{schedule.task_date}}</strong></li>
-                                                        <li>Task: <strong>{{schedule.task}}</strong></li>
-                                                        <li>Machine: <strong>{{schedule.machine}}</strong></li>
-                                                        <li>Location: <strong>{{schedule.location}}</strong>
+                                                        <li>Date: <strong>{{ukes.task_date}}</strong></li>
+                                                        <li>Machine: <strong>{{ukes.machine}}</strong></li>
+                                                        <li>Location: <strong>{{ukes.location}}</strong>
+                                                        </li>
+                                                        <li>Status:
+                                                            {% if ukes.is_passed %}
+                                                            <strong>Passed</strong>
+                                                            {% elif ukes.is_failed %}
+                                                            <strong>Failed</strong>
+                                                            {% else %}
+                                                            <strong>Pending</strong>
+                                                            {% endif %}
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -69,22 +83,22 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="{% url 'edit' schedule.id %}" class="btn btn-warning me-1"><i
+                                    <a href="{% url 'edit_ukes' ukes.id %}" class="btn btn-warning me-1"><i
                                             class="fa-solid fa-pen-to-square fa-lg"></i></a>
 
                                     <button class="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#delete{{schedule.id}}"><i
+                                        data-bs-target="#delete_ukes{{ukes.id}}"><i
                                             class="fa-solid fa-trash-can fa-lg"></i></button>
 
                                     <!-- 
-                                                Modal Delete Schedule -->
-                                    <div class="modal" id="delete{{schedule.id}}" tabindex="-1"
+                                                Modal Delete Penerimaan -->
+                                    <div class="modal" id="delete_ukes{{ukes.id}}" tabindex="-1"
                                         aria-labelledby="myModalLabel2" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">
-                                                        Scheduled Date: {{schedule.task_date}}
+                                                        Submit Date: {{ukes.task_date}}
                                                     </h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close">
@@ -95,7 +109,8 @@
                                                     <p>Are you sure?</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <form action="{% url 'delete' schedule.id %}" method="POST">
+                                                    <form action="{% url 'delete_ukes' ukes.id %}"
+                                                        method="POST">
                                                         {% csrf_token %}
                                                         <input type="submit" class="btn btn-primary" value="delete">
                                                     </form>
@@ -115,7 +130,7 @@
             </div>
         </div>
         {% else %}
-        <h5 class="alert alert-primary ms-4 me-4">Belum ada jadwal</h5>
+        <h5 class="alert alert-primary ms-4 me-4">Belum ada uji kesesuaian</h5>
         {% endif %}
     </div>
 </div>

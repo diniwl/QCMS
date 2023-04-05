@@ -28,20 +28,20 @@
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'home' %}">Jadwal
+                        <a class="nav-link" href="{% url 'home' %}">Jadwal
                             <span class="visually-hidden">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Uji Penerimaan</a>
+                        <a class="nav-link" href="{% url 'home_penerimaan' %}">Uji Penerimaan</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                             aria-haspopup="true" aria-expanded="false">Pemantauan kinerja Rutin</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Kalibrasi</a>
+                            <a class="dropdown-item" href="{% url 'home_kalibrasi' %}">Kalibrasi</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Uji Kesesuaian</a>
+                            <a class="dropdown-item" href="{% url 'home_ukes' %}">Uji Kesesuaian</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -50,7 +50,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">Preventif</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Service Report</a>
+                            <a class="dropdown-item" href="{% url 'home_service' %}">Service Report</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -61,8 +61,8 @@
                     </li>
                 </ul>
                 <form class="d-flex">
-                    <input class="form-control me-sm-2" type="search" placeholder="Search">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                    <input id="myInput" class="form-control me-sm-2" type="text" placeholder="Search">
+                    <!-- <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button> -->
                 </form>
             </div>
         </div>
@@ -77,9 +77,26 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
         crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.nav-link').filter(function () {
+                return this.href === location.href;
+            }).addClass('active');
+
+
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $(".myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+        });
+    </script>
+
 
 </body>
 
