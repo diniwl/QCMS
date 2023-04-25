@@ -37,12 +37,15 @@ class Kalibrasi(models.Model):
     is_passed = models.BooleanField('paseed', default=False)
     is_failed = models.BooleanField('failed', default=False)
 
-# #SERTIF KALIBRASI
-# class Sertifkalibrasi(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-#     task_date = models.DateField(null=True)
-#     file_name = models.CharField(max_length=150)
-#     file_type = models.CharField(max_length=150)
+#SERTIF KALIBRASI
+class Sertifkalibrasi(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    submit_date = models.DateField(null=True)
+    location = models.CharField(max_length=150)
+    file_name = models.CharField(max_length=150)
+    machine = models.CharField(max_length=150)
+    serial = models.CharField(max_length=150)
+    pdf_file = models.FileField(upload_to='sertifkalibrasi/')
 
 # #SERTIF UJI KESESUAIAN
 # class Sertifukes(models.Model):
@@ -71,12 +74,12 @@ class Ukes(models.Model):
 
 # SERVICE REPORT
 class Service(models.Model):
-    EMG = 'EMG'
-    NONEMG = 'NONEMG'
-    CONTRACT = 'CONTR'
-    INSTALL = 'INSTL'
-    WARRANTY = 'WRT'
-    OTHER = 'OTR'
+    EMG = 'EMERGENCY'
+    NONEMG = 'NON-EMERGENCY'
+    CONTRACT = 'CONTRACT'
+    INSTALL = 'INSTALL'
+    WARRANTY = 'WARRANTY'
+    OTHER = 'OTHER'
 
     CHOICES = (
         (EMG, 'Emergency'),
@@ -89,15 +92,15 @@ class Service(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     task_date = models.DateField(null=True)
+    address = models.CharField(max_length=150)
+    complain_num = models.CharField(max_length=150)
+    service_type = models.CharField(max_length=100, choices=CHOICES, default=NONEMG)
     brand = models.CharField(max_length=150)
     type = models.CharField(max_length=150)
     serial = models.CharField(max_length=150)
-    address = models.CharField(max_length=150)
     problem = models.CharField(max_length=350)
     repair = models.CharField(max_length=350)
     cust_name = models.CharField(max_length=150)
     tech_name = models.CharField(max_length=150)
-    complain_num = models.CharField(max_length=150)
     is_completed = models.BooleanField('completed', default=False)
     is_continue = models.BooleanField('continue', default=False)
-    service_type = models.CharField(max_length=100, choices=CHOICES, default=NONEMG)

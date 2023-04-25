@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, Schedule, Penerimaan, Kalibrasi, Ukes, Service
+from .models import User, Schedule, Penerimaan, Kalibrasi, Ukes, Service, Sertifkalibrasi
 
 #AUTH
 class LoginForm(forms.Form):
@@ -77,6 +77,28 @@ class Kalibrasiform(forms.ModelForm):
             'is_failed' : forms.CheckboxInput(),
         }
 
+#SERTIF KALIBRASI
+class SertifKalibrasiform(forms.ModelForm):
+    class Meta:
+        model = Sertifkalibrasi
+        fields = ['submit_date', 'location','file_name', 'machine', 'serial', 'pdf_file']
+        labels = {
+            'submit_date': 'Submit Date',
+            'location': 'Location',
+            'file_name': 'File name (in PDF)',
+            'machine': 'Brand and Type',
+            'serial': 'Serial number',
+            'pdf_file': 'File',
+        }
+
+        Widgets = {
+            'submit_date': forms.DateInput(attrs={'class': 'form-control'}),
+            'location': forms.TextInput(attrs={'class': 'form-control'}),
+            'file_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'machine': forms.TextInput(attrs={'class': 'form-control'}),
+            'serial': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
 #UKES
 class Ukesform(forms.ModelForm):
     class Meta:
@@ -99,8 +121,7 @@ class Ukesform(forms.ModelForm):
 
 #SERVICE
 class Serviceform(forms.ModelForm):
-    class Meta:
-        CHOICES = (
+    CHOICES = (
         (1, 'Emergency'),
         (2, 'Non-emergency'),
         (3, 'Contract'),
@@ -108,7 +129,10 @@ class Serviceform(forms.ModelForm):
         (5, 'Warranty'),
         (6, 'Other'),
     )
-        
+
+    service_type: forms.ChoiceField(choices=CHOICES)
+
+    class Meta:
         model = Service
         fields = ['task_date', 'brand', 'type', 'serial', 'address', 'problem', 'repair', 'cust_name', 'tech_name', 'complain_num', 'is_completed', 'is_continue', 'service_type']
         labels = {
@@ -138,7 +162,6 @@ class Serviceform(forms.ModelForm):
             'cust_name': forms.TextInput(attrs={'class': 'form-control'}),
             'tech_name': forms.TextInput(attrs={'class': 'form-control'}),
             'complain_num': forms.TextInput(attrs={'class': 'form-control'}),
-            'service_type': forms.ChoiceField(choices=CHOICES),
             'is_completed' : forms.CheckboxInput(),
             'is_continue' : forms.CheckboxInput(),
         }

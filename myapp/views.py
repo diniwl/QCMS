@@ -1,12 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,  get_object_or_404
 from .forms import SignUpForm, LoginForm
 from django.contrib.auth import authenticate, login, logout as django_logout
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
-from .models import Schedule, Penerimaan, Kalibrasi, Ukes, Service
-from .forms import Scheduleform, Penerimaanform, Kalibrasiform, Ukesform, Serviceform
+from .models import Schedule, Penerimaan, Kalibrasi, Ukes, Service, Sertifkalibrasi
+from .forms import Scheduleform, Penerimaanform, Kalibrasiform, Ukesform, Serviceform, SertifKalibrasiform
 
 # Create your views here.
 
@@ -249,6 +249,48 @@ def delete_kalibrasi(request, id):
         kalibrasi = Kalibrasi.objects.get(pk=id)
         kalibrasi.delete()
     return HttpResponseRedirect(reverse('home_kalibrasi'))
+
+
+# SERTIF KALIBRAsi
+@login_required
+def home_sertifkalibrasi(request):
+    sertifkalibrasi = Sertifkalibrasi.objects.filter(user=request.user)
+    return render(request, 'myapp/home_sertifk.html', {
+        'sertifkalibrasi': sertifkalibrasi
+    })
+
+@login_required
+def sertif_kalibrasi(request):
+    if request.method == 'POST':
+        form = SertifKalibrasiform(request.POST, request.FILES)
+        if form.is_valid():
+            new_submitdate = form.cleaned_data['submit_date']
+            new_filename = form.cleaned_data['file_name']
+            new_machine = form.cleaned_data['machine']
+            new_serial = form.cleaned_data['serial']
+            new_file = form.cleaned_data['pdf_file']
+
+            new_sertifkalibrasi = Sertifkalibrasi(
+                user=request.user,
+                submit_date = new_submitdate,
+                file_name = new_filename,
+                machine = new_machine,
+                serial = new_serial,
+                pdf_file = new_file
+            )
+            new_sertifkalibrasi.save()
+    else:
+        form = SertifKalibrasiform()
+    return render(request, 'myapp/upload_kalibrasi.html', {'form': form})
+
+@login_required
+def view_sertifkalibrasi(request, id):
+    pdf = get_object_or_404(Sertifkalibrasi, pk=id, user=request.user)
+    return render(request, 'myapp/view_sertifk.html', {'pdf': pdf})
+    # response = HttpResponse(pdf.pdf_file, content_type='application/pdf')
+    # response['Content-Disposition'] = f'filename="{pdf.name}.pdf"'
+    # return response
+
 
 # UJI KESESUAIAN
 @login_required

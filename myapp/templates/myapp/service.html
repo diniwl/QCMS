@@ -19,6 +19,7 @@
                                 <th scope="col">Date</th>
                                 <th scope="col">Machine</th>
                                 <th scope="col">Location</th>
+                                <th scope="col">Problem</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Actions</th>
                             </tr>
@@ -28,8 +29,9 @@
                             <tr>
                                 <!-- from models.py -->
                                 <td>{{service.task_date}}</td>
-                                <td>{{service.brand}}</td>
+                                <td>{{service.brand}} {{service.type}}</td>
                                 <td>{{service.address}}</td>
+                                <td>{{service.problem}}</td>
                                 <td> {% if service.is_completed %}
                                     <strong>Completed</strong>
                                     {% elif service.is_continue %}
@@ -61,8 +63,14 @@
                                                 <div class="modal-body">
                                                     <ul class="list-unlysted">
                                                         <li>Date: <strong>{{service.task_date}}</strong></li>
+                                                        <li>Service type: <strong>{{service.service_type}}</strong></li>
                                                         <li>Machine: <strong>{{service.brand}} {{service.type}}</strong></li>
+                                                        <li>Serial number: <strong>{{service.serial}}</strong></li>
                                                         <li>Location: <strong>{{service.address}}</strong>
+                                                        <li>Problem: <strong>{{service.problem}}</strong></li>
+                                                        <li>Repair comments: <strong>{{service.repair}}</strong></li>
+                                                        <li>Customer's identity: <strong>{{service.cust_name}}</strong></li>
+                                                        <li>Technician's identity: <strong>{{service.tech_name}}</strong></li>
                                                         </li>
                                                         <li>Status:
                                                             {% if service.is_completed %}
