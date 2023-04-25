@@ -35,7 +35,10 @@ urlpatterns = [
     #SERTIF KALIBRASI
     path('home_sertifkalibrasi/', views.home_sertifkalibrasi, name='home_sertifkalibrasi'),
     path('sertif_kalibrasi/', views.sertif_kalibrasi, name='sertif_kalibrasi'),
-    path('view_sertifkalibrasi/<int:id>/', views.view_sertifkalibrasi, name='view_sertifkalibrasi'),
+    path('focus_sertifk/<int:id>/', views.focus_sertifk, name='focus_sertifk'),
+    path('<int:id>', views.view_sertifk, name='view_sertifk'),
+    path('edit_sertifkalibrasi/<int:id>/', views.edit_sertifkalibrasi, name='edit_sertifkalibrasi'),
+    path('delete_sertifkalibrasi/<int:id>/', views.delete_sertifkalibrasi, name='delete_sertifkalibrasi'),
 
     #UKES
     path('home_ukes', views.home_ukes, name='home_ukes'),
@@ -43,6 +46,14 @@ urlpatterns = [
     path('add_ukes/', views.add_ukes, name='add_ukes'),
     path('edit_ukes/<int:id>/', views.edit_ukes, name='edit_ukes'),
     path('delete_ukes/<int:id>/', views.delete_ukes, name='delete_ukes'),
+
+    #SERTIF UKES
+    path('home_sertifukes/', views.home_sertifukes, name='home_sertifukes'),
+    path('add_sertifukes/', views.add_sertifukes, name='add_sertifukes'),
+    path('focus_sertifukes/<int:id>/', views.focus_sertifukes, name='focus_sertifukes'),
+    path('<int:id>', views.view_sertifukes, name='view_sertifukes'),
+    path('edit_sertifukes/<int:id>/', views.edit_sertifukes, name='edit_sertifukes'),
+    path('delete_sertifukes/<int:id>/', views.delete_sertifukes, name='delete_sertifukes'),
 
     #SERVICE REPORT
     path('home_service', views.home_service, name='home_service'),

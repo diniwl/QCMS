@@ -6,7 +6,7 @@
 {% if success %}
 <div class="alert alert-success" role="alert">
     Sucessfully uploaded.
-    <a href="{% url 'home_sertifkalibrasi' %}" class="alert-link">Go back.</a>
+    <a href="{% url 'home_sertifukes' %}" class="alert-link">Go back.</a>
 </div>
 {% else %}
 <div class="row justify-content-center">
@@ -17,7 +17,7 @@
                     {% csrf_token %}
                     {{ form.as_p }}
                     <button type="submit" class="btn btn-primary">Upload</button>
-                    <a href="{% url 'home_sertifkalibrasi' %}" class="btn btn-secondary">Cancel</a>
+                    <a href="{% url 'home_sertifukes' %}" class="btn btn-secondary">Cancel</a>
                 </form>
             </div>
         </div>

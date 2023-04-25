@@ -5,8 +5,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
-from .models import Schedule, Penerimaan, Kalibrasi, Ukes, Service, Sertifkalibrasi
-from .forms import Scheduleform, Penerimaanform, Kalibrasiform, Ukesform, Serviceform, SertifKalibrasiform
+from .models import Schedule, Penerimaan, Kalibrasi, Ukes, Service, Sertifkalibrasi, Sertifukes
+from .forms import Scheduleform, Penerimaanform, Kalibrasiform, Ukesform, Serviceform, SertifKalibrasiform, Sertifukesform
 
 # Create your views here.
 
@@ -251,7 +251,7 @@ def delete_kalibrasi(request, id):
     return HttpResponseRedirect(reverse('home_kalibrasi'))
 
 
-# SERTIF KALIBRAsi
+# SERTIF KALIBRASI
 @login_required
 def home_sertifkalibrasi(request):
     sertifkalibrasi = Sertifkalibrasi.objects.filter(user=request.user)
@@ -265,6 +265,7 @@ def sertif_kalibrasi(request):
         form = SertifKalibrasiform(request.POST, request.FILES)
         if form.is_valid():
             new_submitdate = form.cleaned_data['submit_date']
+            new_location = form.cleaned_data['location']
             new_filename = form.cleaned_data['file_name']
             new_machine = form.cleaned_data['machine']
             new_serial = form.cleaned_data['serial']
@@ -273,6 +274,7 @@ def sertif_kalibrasi(request):
             new_sertifkalibrasi = Sertifkalibrasi(
                 user=request.user,
                 submit_date = new_submitdate,
+                location = new_location,
                 file_name = new_filename,
                 machine = new_machine,
                 serial = new_serial,
@@ -283,13 +285,40 @@ def sertif_kalibrasi(request):
         form = SertifKalibrasiform()
     return render(request, 'myapp/upload_kalibrasi.html', {'form': form})
 
+
+def view_sertifk(request, id):
+    sertifkalibrasi = Sertifkalibrasi.objects.get(pk=id)
+    return HttpResponseRedirect(reverse('home_sertifkalibrasi'))
+
 @login_required
-def view_sertifkalibrasi(request, id):
+def focus_sertifk(request, id):
     pdf = get_object_or_404(Sertifkalibrasi, pk=id, user=request.user)
-    return render(request, 'myapp/view_sertifk.html', {'pdf': pdf})
-    # response = HttpResponse(pdf.pdf_file, content_type='application/pdf')
-    # response['Content-Disposition'] = f'filename="{pdf.name}.pdf"'
-    # return response
+    response = HttpResponse(pdf.pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = f'filename="{pdf.file_name}.pdf"'
+    return response
+
+def edit_sertifkalibrasi(request, id):
+    if request.method == 'POST':
+        sertifkalibrasi = Sertifkalibrasi.objects.get(pk=id)
+        form = SertifKalibrasiform(request.POST, instance=sertifkalibrasi)
+        if form.is_valid():
+            form.save()
+            return render(request, 'myapp/edit_sertifk.html', {
+                'form': form,
+                'success': True
+            })
+    else:
+        sertifkalibrasi = Sertifkalibrasi.objects.get(pk=id)
+        form = SertifKalibrasiform(instance=sertifkalibrasi)
+    return render(request, 'myapp/edit_sertifk.html', {
+        'form': form
+    })
+
+def delete_sertifkalibrasi(request, id):
+    if request.method == 'POST':
+        sertifkalibrasi = Sertifkalibrasi.objects.get(pk=id)
+        sertifkalibrasi.delete()
+    return HttpResponseRedirect(reverse('home_sertifkalibrasi'))
 
 
 # UJI KESESUAIAN
@@ -356,6 +385,76 @@ def delete_ukes(request, id):
         ukes = Ukes.objects.get(pk=id)
         ukes.delete()
     return HttpResponseRedirect(reverse('home_ukes'))
+
+# SERTIFIKAT UKES
+@login_required
+def home_sertifukes(request):
+    sertifukes = Sertifukes.objects.filter(user=request.user)
+    return render(request, 'myapp/home_sertifukes.html', {
+        'sertifukes': sertifukes
+    })
+
+@login_required
+def add_sertifukes(request):
+    if request.method == 'POST':
+        form = Sertifukesform(request.POST, request.FILES)
+        if form.is_valid():
+            new_submitdate = form.cleaned_data['submit_date']
+            new_location = form.cleaned_data['location']
+            new_filename = form.cleaned_data['file_name']
+            new_machine = form.cleaned_data['machine']
+            new_serial = form.cleaned_data['serial']
+            new_file = form.cleaned_data['pdf_file']
+
+            new_sertifukes = Sertifukes(
+                user=request.user,
+                submit_date = new_submitdate,
+                location = new_location,
+                file_name = new_filename,
+                machine = new_machine,
+                serial = new_serial,
+                pdf_file = new_file
+            )
+            new_sertifukes.save()
+    else:
+        form = Sertifukesform()
+    return render(request, 'myapp/upload_sertifukes.html', {'form': form})
+
+
+def view_sertifukes(request, id):
+    sertifukes = Sertifukes.objects.get(pk=id)
+    return HttpResponseRedirect(reverse('home_sertifukes'))
+
+@login_required
+def focus_sertifukes(request, id):
+    pdf = get_object_or_404(Sertifukes, pk=id, user=request.user)
+    response = HttpResponse(pdf.pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = f'filename="{pdf.file_name}.pdf"'
+    return response
+
+def edit_sertifukes(request, id):
+    if request.method == 'POST':
+        sertifukes = Sertifukes.objects.get(pk=id)
+        form = Sertifukesform(request.POST, instance=sertifukes)
+        if form.is_valid():
+            form.save()
+            return render(request, 'myapp/edit_sertifukes.html', {
+                'form': form,
+                'success': True
+            })
+    else:
+        sertifukes = Sertifukes.objects.get(pk=id)
+        form = Sertifukesform(instance=sertifukes)
+    return render(request, 'myapp/edit_sertifukes.html', {
+        'form': form
+    })
+
+def delete_sertifukes(request, id):
+    if request.method == 'POST':
+        sertifukes = Sertifukes.objects.get(pk=id)
+        sertifukes.delete()
+    return HttpResponseRedirect(reverse('home_sertifukes'))
+
 
 # SERVICE REPORT
 @login_required

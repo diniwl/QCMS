@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, Schedule, Penerimaan, Kalibrasi, Ukes, Service, Sertifkalibrasi
+from .models import User, Schedule, Penerimaan, Kalibrasi, Ukes, Service, Sertifkalibrasi, Sertifukes
 
 #AUTH
 class LoginForm(forms.Form):
@@ -117,6 +117,28 @@ class Ukesform(forms.ModelForm):
             'location': forms.TextInput(attrs={'class': 'form-control'}),
             'is_passed' : forms.CheckboxInput(),
             'is_failed' : forms.CheckboxInput(),
+        }
+
+#SERTIF UKES
+class Sertifukesform(forms.ModelForm):
+    class Meta:
+        model = Sertifukes
+        fields = ['submit_date', 'location','file_name', 'machine', 'serial', 'pdf_file']
+        labels = {
+            'submit_date': 'Submit Date',
+            'location': 'Location',
+            'file_name': 'File name (in PDF)',
+            'machine': 'Brand and Type',
+            'serial': 'Serial number',
+            'pdf_file': 'File',
+        }
+
+        Widgets = {
+            'submit_date': forms.DateInput(attrs={'class': 'form-control'}),
+            'location': forms.TextInput(attrs={'class': 'form-control'}),
+            'file_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'machine': forms.TextInput(attrs={'class': 'form-control'}),
+            'serial': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
 #SERVICE

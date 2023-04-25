@@ -3,13 +3,13 @@
 {% block body %}
 <!-- 
     Forms -->
-<h3 class="m-4">Sertfikat Kalibrasi</h3>
+<h3 class="m-4">Sertfikat Uji Kesesuaian</h3>
 <div class="row">
     <div class="col-12">
-        <a href="{% url 'home_kalibrasi' %}" class="btn btn-primary ms-4 me-4 mb-4">Go back</a>
-        <a href="{% url 'sertif_kalibrasi' %}" class="btn btn-primary ms-2 me-2 mb-4">Upload New</a>
+        <a href="{% url 'home_ukes' %}" class="btn btn-primary ms-4 me-4 mb-4">Go back</a>
+        <a href="{% url 'add_sertifukes' %}" class="btn btn-primary ms-2 me-2 mb-4">Upload New</a>
         <!-- Check if there's data in database -->
-        {% if sertifkalibrasi %}
+        {% if sertifukes %}
         <div class="card bg-secondary ms-4 me-4 mb-4">
             <div class="card-body">
                 <p class="card-text">
@@ -25,27 +25,27 @@
                             </tr>
                         </thead>
                         <tbody class="myTable">
-                            {% for sertifkalibrasi in sertifkalibrasi %}
+                            {% for sertifukes in sertifukes %}
                             <tr>
                                 <!-- from models.py -->
-                                <td>{{sertifkalibrasi.submit_date}}</td>
-                                <td>{{sertifkalibrasi.machine}}</td>
-                                <td>{{sertifkalibrasi.location}}</td>
-                                <td>{{sertifkalibrasi.file_name}}</td>
+                                <td>{{sertifukes.submit_date}}</td>
+                                <td>{{sertifukes.machine}}</td>
+                                <td>{{sertifukes.location}}</td>
+                                <td>{{sertifukes.file_name}}</td>
                                 <td>
                                     <button type="button" class="btn btn-success me-1"
-                                        href="{% url 'view_sertifk' sertifkalibrasi.id %}"
-                                        data-bs-toggle="modal" data-bs-target="#myModal{{sertifkalibrasi.id}}">
+                                        href="{% url 'view_sertifukes' sertifukes.id %}" data-bs-toggle="modal"
+                                        data-bs-target="#myModal{{sertifukes.id}}">
                                         <i class="fa-solid fa-circle-info fa-lg"></i></button>
                                     <!-- 
                                                 Modal View Sertif Kalibrasi -->
-                                    <div class="modal" id="myModal{{sertifkalibrasi.id}}" tabindex="-1"
+                                    <div class="modal" id="myModal{{sertifukes.id}}" tabindex="-1"
                                         aria-labelledby="myModalLabel1" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">
-                                                        Submit Date: {{sertifkalibrasi.submit_date}}
+                                                        Submit Date: {{sertifukes.submit_date}}
                                                     </h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close">
@@ -54,12 +54,15 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <ul class="list-unlysted">
-                                                        <li>Date: <strong>{{sertifkalibrasi.submit_date}}</strong></li>
-                                                        <li>Machine: <strong>{{sertifkalibrasi.machine}}</strong></li>
-                                                        <li>Serial number: <strong>{{sertifkalibrasi.serial}}</strong></li>
-                                                        <li>Location: <strong>{{sertifkalibrasi.location}}</strong></li>
-                                                        <li>File name: <strong>{{sertifkalibrasi.file_name}}</strong></li>
-                                                        <li><a href="{% url 'focus_sertifk' sertifkalibrasi.id %}">Click here to view file</a></li>
+                                                        <li>Date: <strong>{{sertifukes.submit_date}}</strong></li>
+                                                        <li>Machine: <strong>{{sertifukes.machine}}</strong></li>
+                                                        <li>Serial number: <strong>{{sertifukes.serial}}</strong>
+                                                        </li>
+                                                        <li>Location: <strong>{{sertifukes.location}}</strong></li>
+                                                        <li>File name: <strong>{{sertifukes.file_name}}</strong>
+                                                        </li>
+                                                        <li><a href="{% url 'focus_sertifukes' sertifukes.id %}">Click
+                                                                here to view file</a></li>
                                                     </ul>
                                                 </div>
                                                 <div class="modal-footer">
@@ -71,22 +74,22 @@
                                     </div>
 
 
-                                    <a href="{% url 'edit_sertifkalibrasi' sertifkalibrasi.id %}" class="btn btn-warning me-1"><i
-                                            class="fa-solid fa-pen-to-square fa-lg"></i></a>
+                                    <a href="{% url 'edit_sertifukes' sertifukes.id %}"
+                                        class="btn btn-warning me-1"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
 
                                     <button class="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#delete_sertifkalibrasi{{sertifkalibrasi.id}}"><i
+                                        data-bs-target="#delete_sertifukes{{sertifkalibrasi.id}}"><i
                                             class="fa-solid fa-trash-can fa-lg"></i></button>
 
                                     <!-- 
                                                 Modal Delete Sertif Kalibrasi -->
-                                    <div class="modal" id="delete_sertifkalibrasi{{sertifkalibrasi.id}}" tabindex="-1"
+                                    <div class="modal" id="delete_sertifukes{{sertifkalibrasi.id}}" tabindex="-1"
                                         aria-labelledby="myModalLabel2" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">
-                                                        Submit Date: {{sertifkalibrasi.submit_date}}
+                                                        Submit Date: {{sertifukes.submit_date}}
                                                     </h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close">
@@ -97,7 +100,7 @@
                                                     <p>Are you sure?</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <form action="{% url 'delete_sertifkalibrasi' sertifkalibrasi.id %}"
+                                                    <form action="{% url 'delete_sertifukes' sertifukes.id %}"
                                                         method="POST">
                                                         {% csrf_token %}
                                                         <input type="submit" class="btn btn-primary" value="delete">

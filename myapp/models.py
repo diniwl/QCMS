@@ -34,7 +34,7 @@ class Kalibrasi(models.Model):
     task_date = models.DateField(null=True)
     machine = models.CharField(max_length=150)
     location = models.CharField(max_length=150)
-    is_passed = models.BooleanField('paseed', default=False)
+    is_passed = models.BooleanField('passed', default=False)
     is_failed = models.BooleanField('failed', default=False)
 
 #SERTIF KALIBRASI
@@ -47,13 +47,15 @@ class Sertifkalibrasi(models.Model):
     serial = models.CharField(max_length=150)
     pdf_file = models.FileField(upload_to='sertifkalibrasi/')
 
-# #SERTIF UJI KESESUAIAN
-# class Sertifukes(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-#     task_date = models.DateField(null=True)
-#     file_name = models.CharField(max_length=150)
-#     file_type = models.CharField(max_length=150)
-
+#SERTIF UJI KESESUAIAN
+class Sertifukes(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    submit_date = models.DateField(null=True)
+    location = models.CharField(max_length=150)
+    file_name = models.CharField(max_length=150)
+    machine = models.CharField(max_length=150)
+    serial = models.CharField(max_length=150)
+    pdf_file = models.FileField(upload_to='sertifukes/')
 
 # UJI  KESESUAIAN
 class Ukes(models.Model):
