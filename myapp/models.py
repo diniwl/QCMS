@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 
@@ -10,6 +11,14 @@ class User(AbstractUser):
     is_tem = models.BooleanField('is tem', default=False)
     is_tro = models.BooleanField('is tro', default=False)
     institute_name = models.CharField(max_length=150, null=True)
+    email = models.EmailField(unique=True)
+    username = models.CharField(max_length=150, unique=True)
+    password = models.CharField(max_length=128)
+
+    def clean(self):
+        if self.is_tem and self.is_tro:
+            raise ValidationError('You can only select one')
+        super().clean()
 
 # SCHEDULE
 class Schedule(models.Model):

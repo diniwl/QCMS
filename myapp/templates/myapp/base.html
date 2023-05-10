@@ -54,7 +54,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Pengaturan</a>
+                        <a class="nav-link" href="{% url 'account_edit' %}">Akun</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
@@ -82,11 +82,6 @@
 
     <script>
         $(document).ready(function () {
-            $('.nav-link').filter(function () {
-                return this.href === location.href;
-            }).addClass('active');
-
-
             $("#myInput").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
                 $(".myTable tr").filter(function () {

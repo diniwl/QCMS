@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect,  get_object_or_404
 from .forms import SignUpForm, LoginForm
-from django.contrib.auth import authenticate, login, logout as django_logout
+from django.contrib.auth import authenticate, login, logout as django_logout, update_session_auth_hash
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 
-from .models import Schedule, Penerimaan, Kalibrasi, Ukes, Service, Sertifkalibrasi, Sertifukes
+from .models import Schedule, Penerimaan, Kalibrasi, Ukes, Service, Sertifkalibrasi, Sertifukes, User
 from .forms import Scheduleform, Penerimaanform, Kalibrasiform, Ukesform, Serviceform, SertifKalibrasiform, Sertifukesform
 
 # Create your views here.
@@ -52,6 +53,26 @@ def view_login(request):
 def logout(request):
     django_logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+# EDIT ACCOUNT PAGE
+class UserEditForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+def account_edit(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(request.POST, instance=request.user)
+        password_form = PasswordChangeForm(request.user, request.POST)
+        if user_form.is_valid() and password_form.is_valid():
+            user_form.save()
+            password_form.save()
+            update_session_auth_hash(request, user_form.instance)
+            return redirect('account_edit')
+    else:
+        user_form = UserChangeForm(instance=request.user)
+        password_form = PasswordChangeForm(request.user)
+    return render(request, 'myapp/account_edit.html', {'user_form':user_form, 'password_form':password_form})
 
 # SCHEDULE PAGE
 @login_required

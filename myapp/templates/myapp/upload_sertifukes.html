@@ -1,8 +1,8 @@
 {% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block body %}
-
-<h3 class="text-center m-4">Upload Certificate</h3>\
+<h3 class="text-center m-4">Upload Certificate</h3>
 {% if success %}
 <div class="alert alert-success" role="alert">
     Sucessfully uploaded.
@@ -13,15 +13,14 @@
     <div class="col-6">
         <div class="card bg-secondary mb-3">
             <div class="card-body">
-                <form enctype="multipart/form-data" method="post" action="">
+                <form enctype="multipart/form-data" method="post" action="{% url 'add_sertifukes' %}">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {{ form|crispy }}
                     <button type="submit" class="btn btn-primary">Upload</button>
                     <a href="{% url 'home_sertifukes' %}" class="btn btn-secondary">Cancel</a>
                 </form>
             </div>
         </div>
     </div>
-</div>
-{% endif %}
-{% endblock %}
+    {% endif %}
+    {% endblock %}
