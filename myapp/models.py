@@ -37,6 +37,12 @@ class Penerimaan(models.Model):
     is_passed = models.BooleanField('passed', default=False)
     is_failed = models.BooleanField('failed', default=False)
 
+    def clean(self):
+        if self.is_passed and self.is_failed:
+            raise ValidationError('You can only select one')
+        super().clean()
+    
+
 #  KALIBRASI
 class Kalibrasi(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -46,6 +52,11 @@ class Kalibrasi(models.Model):
     is_passed = models.BooleanField('passed', default=False)
     is_failed = models.BooleanField('failed', default=False)
 
+    def clean(self):
+        if self.is_passed and self.is_failed:
+            raise ValidationError('You can only select one')
+        super().clean()
+    
 #SERTIF KALIBRASI
 class Sertifkalibrasi(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -75,13 +86,38 @@ class Ukes(models.Model):
     is_passed = models.BooleanField('passed', default=False)
     is_failed = models.BooleanField('failed', default=False)
 
-# # PEMELIHARAAN PREVENTIF
-# class Preventif(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-#     task_date = models.DateField(null=True)
-#     machine = models.CharField(max_length=150)
-#     location = models.CharField(max_length=150)
-#     period = models.CharField(max_length=150)
+
+    def clean(self):
+        if self.is_passed and self.is_failed:
+            raise ValidationError('You can only select one')
+        super().clean()
+    
+# PEMELIHARAAN PREVENTIF
+class Maintenance(models.Model):
+    # GENERAL INFO
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    task_date = models.DateField(null=True)
+    period = models.CharField(max_length=150)
+    location = models.CharField(max_length=150)
+    hospital_unit = models.CharField(max_length=150)
+
+    # X-RAY INFO
+    xray_brand = models.CharField(max_length=150)
+    xray_type = models.CharField(max_length=150)
+    xray_serial = models.CharField(max_length=150)
+
+    # MEASURING DEVICE INFO
+    calib_brand = models.CharField(max_length=150)
+    calib_type = models.CharField(max_length=150)
+    calib_serial = models.CharField(max_length=150)
+
+    # PHYSICAL CONDITION
+    ctrl_panel_cond = models.BooleanField(default=False)
+    cmd_arm_cond = models.BooleanField(default=False)
+    bucky_tbl_cond = models.BooleanField(default=False)
+    bucky_std_cond = models.BooleanField(default=False)
+    tube_std_cond = models.BooleanField(default=False)
+    generator_cond = models.BooleanField(default=False)
 
 # SERVICE REPORT
 class Service(models.Model):
@@ -115,3 +151,10 @@ class Service(models.Model):
     tech_name = models.CharField(max_length=150)
     is_completed = models.BooleanField('completed', default=False)
     is_continue = models.BooleanField('continue', default=False)
+
+
+    def clean(self):
+        if self.is_completed and self.is_continue:
+            raise ValidationError('You can only select one')
+        super().clean()
+    

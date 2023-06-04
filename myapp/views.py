@@ -6,8 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 
-from .models import Schedule, Penerimaan, Kalibrasi, Ukes, Service, Sertifkalibrasi, Sertifukes, User
-from .forms import Scheduleform, Penerimaanform, Kalibrasiform, Ukesform, Serviceform, SertifKalibrasiform, Sertifukesform
+from .models import Schedule, Penerimaan, Kalibrasi, Ukes, Service, Sertifkalibrasi, Sertifukes, User, Maintenance
+from .forms import Scheduleform, Penerimaanform, Kalibrasiform, Ukesform, Serviceform, SertifKalibrasiform, Sertifukesform, Maintenanceform
 
 # Create your views here.
 
@@ -27,7 +27,7 @@ def register(request):
             msg = 'Registration failed'
     else:
         form = SignUpForm()
-    return render(request, 'myapp/register.html', {'form': form, 'msg': msg})
+    return render(request, 'myapp/auth_pages/register.html', {'form': form, 'msg': msg})
 
 def view_login(request):
     form = LoginForm(request.POST or None)
@@ -47,7 +47,7 @@ def view_login(request):
                 msg = 'Invalid credentials'
         else:
             msg = 'Sign in error'
-    return render(request, 'myapp/login.html', {'form': form, 'msg': msg})
+    return render(request, 'myapp/auth_pages/login.html', {'form': form, 'msg': msg})
 
 
 def logout(request):
@@ -72,13 +72,13 @@ def account_edit(request):
     else:
         user_form = UserChangeForm(instance=request.user)
         password_form = PasswordChangeForm(request.user)
-    return render(request, 'myapp/account_edit.html', {'user_form':user_form, 'password_form':password_form})
+    return render(request, 'myapp/acc_setting/account_edit.html', {'user_form':user_form, 'password_form':password_form})
 
 # SCHEDULE PAGE
 @login_required
 def home(request):
     schedule  = Schedule.objects.filter(user=request.user)
-    return render(request, 'myapp/homepage.html', {
+    return render(request, 'myapp/schedule/homepage.html', {
         'schedule': schedule
     })
 
@@ -107,13 +107,13 @@ def add(request):
                 location = new_location,
             )
             new_schedule.save()
-            return render(request, 'myapp/add.html', {
+            return render(request, 'myapp/schedule/add.html', {
                 'form': Scheduleform(),
                 'success': True
             })
     else:
         form = Scheduleform(),
-    return render(request, 'myapp/add.html', {
+    return render(request, 'myapp/schedule/add.html', {
         'form': Scheduleform()
     })
 
@@ -123,14 +123,14 @@ def edit(request, id):
         form = Scheduleform(request.POST, instance=schedule)
         if form.is_valid():
             form.save()
-            return render(request, 'myapp/edit.html', {
+            return render(request, 'myapp/schedule/edit.html', {
                 'form': form,
                 'success': True
             })
     else:
         schedule = Schedule.objects.get(pk=id)
         form = Scheduleform(instance=schedule)
-    return render(request, 'myapp/edit.html', {
+    return render(request, 'myapp/schedule/edit.html', {
         'form': form
     })
 
@@ -144,7 +144,7 @@ def delete(request, id):
 @login_required
 def home_penerimaan(request):
     penerimaan = Penerimaan.objects.filter(user=request.user)
-    return render(request, 'myapp/penerimaan.html', {
+    return render(request, 'myapp/acceptance/penerimaan.html', {
         'penerimaan': penerimaan
     })
 
@@ -172,13 +172,13 @@ def add_penerimaan(request):
                 is_failed = new_isfailed,
             )
             new_penerimaan.save()
-            return render(request, 'myapp/add_penerimaan.html', {
+            return render(request, 'myapp/acceptance/add_penerimaan.html', {
                 'form': Penerimaanform(),
                 'success': True
             })
     else:
         form = Penerimaanform(),
-    return render(request, 'myapp/add_penerimaan.html', {
+    return render(request, 'myapp/acceptance/add_penerimaan.html', {
         'form': Penerimaanform()
     })
 
@@ -188,14 +188,14 @@ def edit_penerimaan(request, id):
         form = Penerimaanform(request.POST, instance=penerimaan)
         if form.is_valid():
             form.save()
-            return render(request, 'myapp/edit_penerimaan.html', {
+            return render(request, 'myapp/acceptance/edit_penerimaan.html', {
                 'form': form,
                 'success': True
             })
     else:
         penerimaan = Penerimaan.objects.get(pk=id)
         form = Penerimaanform(instance=penerimaan)
-    return render(request, 'myapp/edit_penerimaan.html', {
+    return render(request, 'myapp/acceptance/edit_penerimaan.html', {
         'form': form
     })
 
@@ -210,7 +210,7 @@ def delete_penerimaan(request, id):
 @login_required
 def home_kalibrasi(request):
     kalibrasi = Kalibrasi.objects.filter(user=request.user)
-    return render(request, 'myapp/kalibrasi.html', {
+    return render(request, 'myapp/kalibrasi/kalibrasi.html', {
         'kalibrasi': kalibrasi
     })
 
@@ -238,13 +238,13 @@ def add_kalibrasi(request):
                 is_failed = new_isfailed,
             )
             new_kalibrasi.save()
-            return render(request, 'myapp/add_kalibrasi.html', {
+            return render(request, 'myapp/kalibrasi/add_kalibrasi.html', {
                 'form': Kalibrasiform(),
                 'success': True
             })
     else:
         form = Kalibrasiform(),
-    return render(request, 'myapp/add_kalibrasi.html', {
+    return render(request, 'myapp/kalibrasi/add_kalibrasi.html', {
         'form': Kalibrasiform()
     })
 
@@ -254,14 +254,14 @@ def edit_kalibrasi(request, id):
         form = Kalibrasiform(request.POST, instance=kalibrasi)
         if form.is_valid():
             form.save()
-            return render(request, 'myapp/edit_kalibrasi.html', {
+            return render(request, 'myapp/kalibrasi/edit_kalibrasi.html', {
                 'form': form,
                 'success': True
             })
     else:
         kalibrasi = Kalibrasi.objects.get(pk=id)
         form = Kalibrasiform(instance=kalibrasi)
-    return render(request, 'myapp/edit_kalibrasi.html', {
+    return render(request, 'myapp/kalibrasi/edit_kalibrasi.html', {
         'form': form
     })
 
@@ -276,7 +276,7 @@ def delete_kalibrasi(request, id):
 @login_required
 def home_sertifkalibrasi(request):
     sertifkalibrasi = Sertifkalibrasi.objects.filter(user=request.user)
-    return render(request, 'myapp/home_sertifk.html', {
+    return render(request, 'myapp/kalibrasi/home_sertifk.html', {
         'sertifkalibrasi': sertifkalibrasi
     })
 
@@ -304,7 +304,7 @@ def sertif_kalibrasi(request):
             new_sertifkalibrasi.save()
     else:
         form = SertifKalibrasiform()
-    return render(request, 'myapp/upload_kalibrasi.html', {'form': form})
+    return render(request, 'myapp/kalibrasi/upload_kalibrasi.html', {'form': form})
 
 
 def view_sertifk(request, id):
@@ -324,14 +324,14 @@ def edit_sertifkalibrasi(request, id):
         form = SertifKalibrasiform(request.POST, instance=sertifkalibrasi)
         if form.is_valid():
             form.save()
-            return render(request, 'myapp/edit_sertifk.html', {
+            return render(request, 'myapp/kalibrasi/edit_sertifk.html', {
                 'form': form,
                 'success': True
             })
     else:
         sertifkalibrasi = Sertifkalibrasi.objects.get(pk=id)
         form = SertifKalibrasiform(instance=sertifkalibrasi)
-    return render(request, 'myapp/edit_sertifk.html', {
+    return render(request, 'myapp/kalibrasi/edit_sertifk.html', {
         'form': form
     })
 
@@ -346,7 +346,7 @@ def delete_sertifkalibrasi(request, id):
 @login_required
 def home_ukes(request):
     ukes = Ukes.objects.filter(user=request.user)
-    return render(request, 'myapp/ukes.html', {
+    return render(request, 'myapp/ukes/ukes.html', {
         'ukes': ukes
     })
 
@@ -374,13 +374,13 @@ def add_ukes(request):
                 is_failed = new_isfailed,
             )
             new_ukes.save()
-            return render(request, 'myapp/add_ukes.html', {
+            return render(request, 'myapp/ukes/add_ukes.html', {
                 'form': Ukesform(),
                 'success': True
             })
     else:
         form = Ukesform(),
-    return render(request, 'myapp/add_ukes.html', {
+    return render(request, 'myapp/ukes/add_ukes.html', {
         'form': Ukesform()
     })
 
@@ -390,14 +390,14 @@ def edit_ukes(request, id):
         form = Ukesform(request.POST, instance=ukes)
         if form.is_valid():
             form.save()
-            return render(request, 'myapp/edit_ukes.html', {
+            return render(request, 'myapp/ukes/edit_ukes.html', {
                 'form': form,
                 'success': True
             })
     else:
         ukes = Ukes.objects.get(pk=id)
         form = Ukesform(instance=ukes)
-    return render(request, 'myapp/edit_ukes.html', {
+    return render(request, 'myapp/ukes/edit_ukes.html', {
         'form': form
     })
 
@@ -411,7 +411,7 @@ def delete_ukes(request, id):
 @login_required
 def home_sertifukes(request):
     sertifukes = Sertifukes.objects.filter(user=request.user)
-    return render(request, 'myapp/home_sertifukes.html', {
+    return render(request, 'myapp/ukes/home_sertifukes.html', {
         'sertifukes': sertifukes
     })
 
@@ -439,7 +439,7 @@ def add_sertifukes(request):
             new_sertifukes.save()
     else:
         form = Sertifukesform()
-    return render(request, 'myapp/upload_sertifukes.html', {'form': form})
+    return render(request, 'myapp/ukes/upload_sertifukes.html', {'form': form})
 
 
 def view_sertifukes(request, id):
@@ -459,14 +459,14 @@ def edit_sertifukes(request, id):
         form = Sertifukesform(request.POST, instance=sertifukes)
         if form.is_valid():
             form.save()
-            return render(request, 'myapp/edit_sertifukes.html', {
+            return render(request, 'myapp/ukes/edit_sertifukes.html', {
                 'form': form,
                 'success': True
             })
     else:
         sertifukes = Sertifukes.objects.get(pk=id)
         form = Sertifukesform(instance=sertifukes)
-    return render(request, 'myapp/edit_sertifukes.html', {
+    return render(request, 'myapp/ukes/edit_sertifukes.html', {
         'form': form
     })
 
@@ -481,7 +481,7 @@ def delete_sertifukes(request, id):
 @login_required
 def home_service(request):
     service = Service.objects.filter(user=request.user)
-    return render(request, 'myapp/service.html', {
+    return render(request, 'myapp/service_report/service.html', {
         'service': service
     })
 
@@ -495,6 +495,7 @@ def add_service(request):
         form = Serviceform(request.POST)
         if form.is_valid():
             new_taskdate = form.cleaned_data['task_date']
+            new_servicetype = form.cleaned_data['service_type']
             new_brand = form.cleaned_data['brand']
             new_type = form.cleaned_data['type']
             new_serial = form.cleaned_data['serial']
@@ -506,11 +507,11 @@ def add_service(request):
             new_complainnum = form.cleaned_data['complain_num']
             new_iscompleted = form.cleaned_data['is_completed']
             new_iscontinue = form.cleaned_data['is_continue']
-            new_servicetype = form.cleaned_data['service_type']
 
             new_service = Service(
                 user=request.user,
                 task_date = new_taskdate,
+                service_type = new_servicetype,
                 brand = new_brand,
                 type = new_type,
                 serial = new_serial,
@@ -522,16 +523,15 @@ def add_service(request):
                 complain_num = new_complainnum,
                 is_completed = new_iscompleted,
                 is_continue = new_iscontinue,
-                service_type = new_servicetype,
             )
             new_service.save()
-            return render(request, 'myapp/add_service.html', {
+            return render(request, 'myapp/service_report/add_service.html', {
                 'form': Serviceform(),
                 'success': True
             })
     else:
         form = Serviceform(),
-    return render(request, 'myapp/add_service.html', {
+    return render(request, 'myapp/service_report/add_service.html', {
         'form': Serviceform()
     })
 
@@ -541,14 +541,14 @@ def edit_service(request, id):
         form = Serviceform(request.POST, instance=service)
         if form.is_valid():
             form.save()
-            return render(request, 'myapp/edit_service.html', {
+            return render(request, 'myapp/service_report/edit_service.html', {
                 'form': form,
                 'success': True
             })
     else:
         service = Service.objects.get(pk=id)
         form = Serviceform(instance=service)
-    return render(request, 'myapp/edit_service.html', {
+    return render(request, 'myapp/service_report/edit_service.html', {
         'form': form
     })
 
@@ -559,3 +559,89 @@ def delete_service(request, id):
     return HttpResponseRedirect(reverse('home_service'))
 
 # PEMELIHARAAN PREVENTIF
+@login_required
+def home_maintenance(request):
+    maintenance = Maintenance.objects.filter(user=request.user)
+    return render(request, 'myapp/pm/maintenance.html', {
+        'maintenance': maintenance
+    })
+
+def view_maintenance(request, id):
+    meintenance = Maintenance.objects.get(pk=id)
+    return HttpResponseRedirect(reverse('home_maintenance'))
+
+@login_required
+def add_maintenance(request):
+    if request.method == 'POST':
+        form = Maintenanceform(request.POST)
+        if form.is_valid():
+            new_taskdate = form.cleaned_data['task_date']
+            new_location = form.cleaned_data['location']
+            new_period = form.cleaned_data['period']
+            new_hospital_unit = form.cleaned_data['hospital_unit']
+            new_xray_brand = form.cleaned_data['xray_brand']
+            new_xray_type = form.cleaned_data['xray_type']
+            new_xray_serial = form.cleaned_data['xray_serial']
+            new_calib_brand = form.cleaned_data['calib_brand']
+            new_calib_type = form.cleaned_data['calib_type']
+            new_calib_serial = form.cleaned_data['calib_serial']
+            new_ctrl_panel_cond = form.cleaned_data['ctrl_panel_cond']
+            new_cmd_arm_cond = form.cleaned_data['cmd_arm_cond']
+            new_bucky_tbl_cond = form.cleaned_data['bucky_tbl_cond']
+            new_bucky_std_cond = form.cleaned_data['bucky_std_cond']
+            new_tube_std_cond = form.cleaned_data['tube_std_cond']
+            new_generator_cond = form.cleaned_data['generator_cond']
+
+
+            new_maintenance = Maintenance(
+                user = request.user,
+                task_date = new_taskdate,
+                location = new_location,
+                period = new_period,
+                hospital_unit = new_hospital_unit,
+                xray_brand = new_xray_brand,
+                xray_type = new_xray_type,
+                xray_serial = new_xray_serial,
+                calib_brand = new_calib_brand,
+                calib_type = new_calib_type,
+                calib_serial = new_calib_serial,
+                ctrl_panel_cond = new_ctrl_panel_cond,
+                cmd_arm_cond = new_cmd_arm_cond,
+                bucky_tbl_cond = new_bucky_tbl_cond,
+                bucky_std_cond = new_bucky_std_cond,
+                tube_std_cond = new_tube_std_cond,
+                generator_cond = new_generator_cond
+            )
+            new_maintenance.save()
+            return render(request, 'myapp/pm/add_maintenance.html', {
+                'form': Maintenanceform(),
+                'success': True
+            })
+    else:
+        form = Maintenanceform(),
+    return render(request, 'myapp/pm/add_maintenance.html', {
+        'form': Maintenanceform()
+    })
+
+def edit_maintenance(request, id):
+    if request.method == 'POST':
+        maintenance = Maintenance.objects.get(pk=id)
+        form = Maintenanceform(request.POST, instance=maintenance)
+        if form.is_valid():
+            form.save()
+            return render(request, 'myapp/pm/edit_maintenance.html', {
+                'form': form,
+                'success': True
+            })
+    else:
+        maintenance = Maintenance.objects.get(pk=id)
+        form = Serviceform(instance=maintenance)
+    return render(request, 'myapp/pm/edit_maintenance.html', {
+        'form': form
+    })
+
+def delete_maintenance(request, id):
+    if request.method == 'POST':
+        maintenance = Maintenance.objects.get(pk=id)
+        maintenance.delete()
+    return HttpResponseRedirect(reverse('home_maintenance'))

@@ -1,23 +1,24 @@
 {% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block body %}
-<h3 class="text-center m-4">Edit Service Report</h3>
+<h3 class="text-center m-4">Edit Preventive Maintenance</h3>
 {% if success %}
 <div class="alert alert-success" role="alert">
-    Service report updated sucessfully.
-    <a href="{% url 'home_service' %}" class="alert-link">Go to Service Report.</a>
+    Preventive  Maintenance updated sucessfully.
+    <a href="{% url 'home_maintenance' %}" class="alert-link">Go to Preventive Maintenance.</a>
 </div>
 {% else %}
 <div class="row justify-content-center">
     <div class="col-6">
         <div class="card bg-secondary mb-3">
-            <div class="card-header">Edit Service Report</div>
+            <div class="card-header">Edit Preventive Maintenance</div>
             <div class="card-body">
                 <form action="" method="POST">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {{ form|crispy }}
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="{% url 'home_service' %}" class="btn btn-secondary">Cancel</a>
+                    <a href="{% url 'home_maintenance' %}" class="btn btn-secondary">Cancel</a>
                 </form>
             </div>
         </div>

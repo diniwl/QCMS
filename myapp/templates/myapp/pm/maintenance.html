@@ -1,0 +1,121 @@
+{% extends 'myapp/base.html' %}
+
+{% block body %}
+<!-- 
+    Forms -->
+<h3 class="m-4">Preventive Maintenance</h3>
+<div class="row">
+    <div class="col-12">
+        <a href="{% url 'add_maintenance' %}" class="btn btn-primary ms-4 me-4 mb-4">Create New</a>
+        <!-- Check if there's data in database -->
+        {% if maintenance %}
+        <div class="card bg-secondary ms-4 me-4 mb-4">
+            <div class="card-body">
+                <p class="card-text">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Machine</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Period</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="myTable">
+                            {% for maintenance in maintenance %}
+                            <tr>
+                                <!-- from models.py -->
+                                <td>{{maintenance.task_date}}</td>
+                                <td>{{maintenance.xray_brand}} {{maintenance.xray_type}}</td>
+                                <td>{{maintenance.location}}</td>
+                                <td>{{maintenance.period}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-success me-1"
+                                        href="{% url 'view_maintenance' maintenance.id %}" data-bs-toggle="modal"
+                                        data-bs-target="#myModal{{maintenance.id}}">
+                                        <i class="fa-solid fa-circle-info fa-lg"></i></button>
+                                    <!-- 
+                                                Modal View Schedule -->
+                                    <div class="modal" id="myModal{{maintenance.id}}" tabindex="-1"
+                                        aria-labelledby="myModalLabel1" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">
+                                                        Date: {{maintenance.task_date}}
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true"></span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="list-unlysted">
+                                                        <li>Date: <strong>{{maintenance.task_date}}</strong></li>
+                                                        <li>Machine: <strong>{{maintenance.xray_brand}} {{maintenance.xray_type}}</strong>
+                                                        </li>
+                                                        <li>Serial number: <strong>{{maintenance.xray_serial}}</strong></li>
+                                                        <li>Location: <strong>{{maintenance.location}}</strong></li>
+                                                        <li>Hospital Unit: <strong>{{maintenance.hospital_unit}}</strong></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="{% url 'edit_maintenance' maintenance.id %}" class="btn btn-warning me-1"><i
+                                            class="fa-solid fa-pen-to-square fa-lg"></i></a>
+
+                                    <button class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#delete_maintenance{{maintenance.id}}"><i
+                                            class="fa-solid fa-trash-can fa-lg"></i></button>
+
+                                    <!-- 
+                                                Modal Delete Penerimaan -->
+                                    <div class="modal" id="delete_maintenance{{maintenance.id}}" tabindex="-1"
+                                        aria-labelledby="myModalLabel2" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">
+                                                        Date: {{maintenace.task_date}}
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true"></span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Are you sure?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form action="{% url 'delete_maintenance' maintenance.id %}" method="POST">
+                                                        {% csrf_token %}
+                                                        <input type="submit" class="btn btn-primary" value="delete">
+                                                    </form>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                </p>
+            </div>
+        </div>
+        {% else %}
+        <h5 class="alert alert-primary ms-4 me-4">Belum Ada Preventive Maintenance</h5>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

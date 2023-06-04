@@ -64,6 +64,13 @@ urlpatterns = [
     path('add_service/', views.add_service, name='add_service'),
     path('edit_service/<int:id>/', views.edit_service, name='edit_service'),
     path('delete_service/<int:id>/', views.delete_service, name='delete_service'),
+
+    #MAINTENANCE
+    path('home_maintenance', views.home_maintenance, name='home_maintenance'),
+    path('<int:id>', views.view_maintenance, name='view_maintenance'),
+    path('add_maintenance/', views.add_maintenance, name='add_maintenance'),
+    path('edit_maintenance/<int:id>/', views.edit_maintenance, name='edit_maintenance'),
+    path('delete_maintenance/<int:id>/', views.delete_maintenance, name='delete_maintenance'),
     
 ]
 

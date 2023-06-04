@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, Schedule, Penerimaan, Kalibrasi, Ukes, Service, Sertifkalibrasi, Sertifukes
+from .models import User, Schedule, Penerimaan, Kalibrasi, Ukes, Service, Sertifkalibrasi, Sertifukes, Maintenance
 
 #AUTH
 class LoginForm(forms.Form):
@@ -159,10 +159,11 @@ class Serviceform(forms.ModelForm):
         fields = ['task_date', 'brand', 'type', 'serial', 'address', 'problem', 'repair', 'cust_name', 'tech_name', 'complain_num', 'is_completed', 'is_continue', 'service_type']
         labels = {
             'task_date': 'Service Date',
+            'service_type': "Type of service",
             'brand': 'Brand',
             'type' : 'Type',
             'serial': 'Serial',
-            'address': 'Customer with adress',
+            'address': "Customer's address",
             'problem': 'Problem/Request',
             'repair': 'Repair comments',
             'cust_name': "Customer's identity",
@@ -170,7 +171,6 @@ class Serviceform(forms.ModelForm):
             'complain_num': "Document's Number",
             'is_completed': 'Completed',
             'is_continue': 'Continue',
-            'service_type': "Type of service"
         }
 
         widgets = {
@@ -180,10 +180,52 @@ class Serviceform(forms.ModelForm):
             'serial': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.TextInput(attrs={'class': 'form-control'}),
             'problem': forms.TextInput(attrs={'class': 'form-control'}),
-            'repair': forms.TextInput(attrs={'class': 'form-control'}),
+            'repair': forms.Textarea(attrs={'class': 'form-control'}),
             'cust_name': forms.TextInput(attrs={'class': 'form-control'}),
             'tech_name': forms.TextInput(attrs={'class': 'form-control'}),
             'complain_num': forms.TextInput(attrs={'class': 'form-control'}),
             'is_completed' : forms.CheckboxInput(),
             'is_continue' : forms.CheckboxInput(),
+        }
+
+#MAINTENANCE
+class Maintenanceform(forms.ModelForm):
+    class Meta:
+        model = Maintenance
+        fields = ['task_date', 'location', 'period', 'hospital_unit', 'xray_brand', 'xray_type', 'xray_serial', 'calib_brand', 'calib_type', 'calib_serial', 'ctrl_panel_cond', 'cmd_arm_cond', 'bucky_tbl_cond', 'bucky_std_cond', 'tube_std_cond', 'generator_cond']
+        labels = {
+            'task_date': 'Scheduled Date',
+            'location': 'Location',
+            'period' : 'Maintenance Period',
+            'hospital_unit' : 'Hospital Unit',
+            'xray_brand' : 'X-Ray Brand',
+            'xray_type' : 'X-Ray Type',
+            'xray_serial' : 'X-Ray Serial',
+            'calib_brand' : 'Measurement Device Brand',
+            'calib_type' : 'Measurement Device Type',
+            'calib_serial' : 'Measurement Device Serial',
+            'ctrl_panel_cond' : 'Control Panel Condition',
+            'cmd_arm_cond' : 'Command Arm Condition',
+            'bucky_tbl_cond' : 'Bucky Table Condition',
+            'bucky_std_cond' : 'Bucky Stand Condition',
+            'tube_std_cond' : 'Tube Stand Condition', 
+            'generator_cond' : 'Generator Conditon',
+        }
+        widgets = {
+            'task_date': forms.DateInput(attrs={'class': 'form-control'}),
+            'location': forms.TextInput(attrs={'class': 'form-control'}),
+            'period': forms.TextInput(attrs={'class': 'form-control'}),
+            'hospital_unit': forms.TextInput(attrs={'class': 'form-control'}),
+            'xray_brand' : forms.TextInput(attrs={'class': 'form-control'}),
+            'xray_type' : forms.TextInput(attrs={'class': 'form-control'}),
+            'xray_serial' : forms.TextInput(attrs={'class': 'form-control'}),
+            'calib_brand' : forms.TextInput(attrs={'class': 'form-control'}),
+            'calib_type' : forms.TextInput(attrs={'class': 'form-control'}),
+            'calib_serial' : forms.TextInput(attrs={'class': 'form-control'}),
+            'ctrl_panel_cond' :  forms.CheckboxInput(),
+            'cmd_arm_cond' :  forms.CheckboxInput(),
+            'bucky_tbl_cond' :  forms.CheckboxInput(),
+            'bucky_std_cond' :  forms.CheckboxInput(),
+            'tube_std_cond' :  forms.CheckboxInput(), 
+            'generator_cond' :  forms.CheckboxInput(),
         }
