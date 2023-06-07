@@ -4,3 +4,119 @@
 <!-- 
     Forms -->
 <h3 class="m-4">Jadwal</h3>
+<div class="row">
+    <div class="col-12">
+        <a href="{% url 'add' %}" class="btn btn-primary ms-4 me-4 mb-4">Create New</a>
+        <!-- Check if there's data in database -->
+        {% if schedule %}
+        <div class="card bg-secondary ms-4 me-4 mb-4">
+            <div class="card-body">
+                <p class="card-text">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Task</th>
+                                <th scope="col">Machine</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Reminder</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="myTable">
+                            {% for schedule in schedule %}
+                            <tr>
+                                <!-- from models.py -->
+                                <td>{{schedule.task_date}}</td>
+                                <td>{{schedule.task}}</td>
+                                <td>{{schedule.machine}}</td>
+                                <td>{{schedule.location}}</td>
+                                <td><i class="fa-solid fa-toggle-on fa-2xl" style="color: #46c700;"></i></td>
+                                <td>
+                                    <button type="button" class="btn btn-success me-1"
+                                        href="{% url 'view_schedule' schedule.id %}" data-bs-toggle="modal"
+                                        data-bs-target="#myModal{{schedule.id}}">
+                                        <i class="fa-solid fa-circle-info fa-lg"></i></button>
+                                    <!-- 
+                                                Modal View Schedule -->
+                                    <div class="modal" id="myModal{{schedule.id}}" tabindex="-1"
+                                        aria-labelledby="myModalLabel1" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">
+                                                        Scheduled Date: {{schedule.task_date}}
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true"></span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="list-unlysted">
+                                                        <li>Date: <strong>{{schedule.task_date}}</strong></li>
+                                                        <li>Task: <strong>{{schedule.task}}</strong></li>
+                                                        <li>Machine: <strong>{{schedule.machine}}</strong></li>
+                                                        <li>Location: <strong>{{schedule.location}}</strong>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="{% url 'edit' schedule.id %}" class="btn btn-warning me-1"><i
+                                            class="fa-solid fa-pen-to-square fa-lg"></i></a>
+
+                                    <button class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#delete{{schedule.id}}"><i
+                                            class="fa-solid fa-trash-can fa-lg"></i></button>
+
+                                    <!-- 
+                                                Modal Delete Schedule -->
+                                    <div class="modal" id="delete{{schedule.id}}" tabindex="-1"
+                                        aria-labelledby="myModalLabel2" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">
+                                                        Scheduled Date: {{schedule.task_date}}
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true"></span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Are you sure?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form action="{% url 'delete' schedule.id %}" method="POST">
+                                                        {% csrf_token %}
+                                                        <input type="submit" class="btn btn-primary" value="delete">
+                                                    </form>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                </p>
+            </div>
+        </div>
+        {% else %}
+        <h5 class="alert alert-primary ms-4 me-4">Belum ada jadwal</h5>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

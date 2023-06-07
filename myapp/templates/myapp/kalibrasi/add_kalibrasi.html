@@ -1,4 +1,5 @@
 {% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block body %}
 <h3 class="text-center m-4">Add Kalibrasi</h3>
@@ -9,13 +10,187 @@
 </div>
 {% else %}
 <div class="row justify-content-center">
-    <div class="col-6">
+    <div class="col-lg-12 col-md-4 mb-3">
         <div class="card bg-secondary mb-3">
             <div class="card-header">New Kalibrasi</div>
             <div class="card-body">
                 <form action="{% url 'add_kalibrasi' %}" method="POST">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {{ form.task_date|as_crispy_field }}
+                    {{ form.location|as_crispy_field }}
+                    {{ form.tech_name|as_crispy_field }}
+
+                    <div class="row">
+                        <p>Informasi Tabung X-Ray</p>
+                        <div class="mb-3 col-md-4 mb-0">
+                            {{ form.xray_tube_brand|as_crispy_field }}
+                        </div>
+                        <div class="mb-3 col-md-4 mb-0">
+                            {{ form.xray_tube_type|as_crispy_field }}
+                        </div>
+                        <div class="mb-3 col-md-4 mb-0">
+                            {{ form.xray_tube_serial|as_crispy_field }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <p>Informasi Generator X-Ray</p>
+                        <div class="mb-3 col-md-4 mb-0">
+                            {{ form.xray_gen_brand|as_crispy_field }}
+                        </div>
+                        <div class="mb-3 col-md-4 mb-0">
+                            {{ form.xray_gen_type|as_crispy_field }}
+                        </div>
+                        <div class="mb-3 col-md-4 mb-0">
+                            {{ form.xray_gen_serial|as_crispy_field }}
+                        </div>
+                    </div>
+
+                    <p>Kondisi Ruangan</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Sesudah</th>
+                                <th scope="col">Sebelum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Temperatur</th>
+                                <td>
+                                    {{ form.temp_before|as_crispy_field }}
+                                </td>
+                                <td>
+                                    {{ form.temp_after|as_crispy_field }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Humiditas</th>
+                                <td>
+                                    {{ form.hum_before|as_crispy_field }}
+                                </td>
+                                <td>
+                                    {{ form.hum_after|as_crispy_field }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>Kalibrasi kV dengan mA konstan</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">No.</th>
+                                <th scope="col">kV-set</th>
+                                <th scope="col">Pengukuran 1</th>
+                                <th scope="col">Pengukuran 2</th>
+                                <th scope="col">Pengukuran 3</th>
+                                <th scope="col">Rata-rata</th>
+                                <th scope="col">Deviasi</th>
+                                <th scope="col">Presentase</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <th scope="row">{{ form.kv_set1|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv1|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv2|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv3|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv_avg1|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv_dev1|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv_prc1|as_crispy_field }}</th>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">2</th>
+                                <th scope="row">{{ form.kv_set2|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv4|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv5|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv6|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv_avg2|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv_dev2|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv_prc2|as_crispy_field }}</th>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">3</th>
+                                <th scope="row">{{ form.kv_set3|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv7|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv8|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv9|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv_avg3|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv_dev3|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kv_prc3|as_crispy_field }}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>Kalibrasi mA dengan kV konstan</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">No.</th>
+                                <th scope="col">mA-set</th>
+                                <th scope="col">Pengukuran 1</th>
+                                <th scope="col">Pengukuran 2</th>
+                                <th scope="col">Pengukuran 3</th>
+                                <th scope="col">Rata-rata</th>
+                                <th scope="col">Deviasi</th>
+                                <th scope="col">Presentase</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <th scope="row">{{ form.ma_set1|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma1|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma2|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma3|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma_avg1|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma_dev1|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma_prc1|as_crispy_field }}</th>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">2</th>
+                                <th scope="row">{{ form.ma_set2|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma4|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma5|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma6|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma_avg2|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma_dev2|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma_prc2|as_crispy_field }}</th>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">3</th>
+                                <th scope="row">{{ form.ma_set3|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma7|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma8|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma9|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma_avg3|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma_dev3|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma_prc3|as_crispy_field }}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>Status Kalibrasi</p>
+
+                    <div class="row">
+                        <div class="mb-3 col-md-6 mb-0">
+                            {{ form.is_passed|as_crispy_field }}
+                        </div>
+                        <div class="mb-3 col-md-6 mb-0">
+                            {{ form.is_failed|as_crispy_field }}
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary">Create</button>
                     <a href="{% url 'home_kalibrasi' %}" class="btn btn-secondary">Cancel</a>
                 </form>

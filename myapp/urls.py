@@ -71,7 +71,9 @@ urlpatterns = [
     path('add_maintenance/', views.add_maintenance, name='add_maintenance'),
     path('edit_maintenance/<int:id>/', views.edit_maintenance, name='edit_maintenance'),
     path('delete_maintenance/<int:id>/', views.delete_maintenance, name='delete_maintenance'),
-    
+
+    #MAINTENANCE
+    path('usersguide/', views.usersguide, name='usersguide'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

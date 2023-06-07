@@ -20,7 +20,6 @@
                                 <th scope="col">Task</th>
                                 <th scope="col">Machine</th>
                                 <th scope="col">Location</th>
-                                <th scope="col">Reminder</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
@@ -32,7 +31,6 @@
                                 <td>{{schedule.task}}</td>
                                 <td>{{schedule.machine}}</td>
                                 <td>{{schedule.location}}</td>
-                                <td><i class="fa-solid fa-toggle-on fa-2xl" style="color: #46c700;"></i></td>
                                 <td>
                                     <button type="button" class="btn btn-success me-1"
                                         href="{% url 'view_schedule' schedule.id %}" data-bs-toggle="modal"

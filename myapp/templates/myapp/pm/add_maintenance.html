@@ -10,13 +10,299 @@
 </div>
 {% else %}
 <div class="row justify-content-center">
-    <div class="col-6">
+    <div class="col-12">
         <div class="card bg-secondary mb-3">
             <div class="card-header">New Preventive Maintenance</div>
             <div class="card-body">
                 <form action="{% url 'add_maintenance' %}" method="POST">
                     {% csrf_token %}
-                    {{ form|crispy }}
+                    {{ form.task_date|as_crispy_field }}
+                    {{ form.period|as_crispy_field }}
+                    <div class="row">
+                        <div class="mb-3 col-md-6 mb-0">
+                            {{ form.location|as_crispy_field }}
+                        </div>
+                        <div class="mb-3 col-md-6 mb-0">
+                            {{ form.hospital_unit|as_crispy_field }}
+                        </div>
+                    </div>
+                    <p>Informasi X-Ray Unit</p>
+                    <div class="row">
+                        <div class="mb-3 col-md-4 mb-0">
+                            {{ form.xray_brand|as_crispy_field }}
+                        </div>
+                        <div class="mb-3 col-md-4 mb-0">
+                            {{ form.xray_type|as_crispy_field }}
+                        </div>
+                        <div class="mb-3 col-md-4 mb-0">
+                            {{ form.xray_serial|as_crispy_field }}
+                        </div>
+                    </div>
+
+                    <p>Pengecekan Fungsi dan Kondisi Bagian Alat</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">No.</th>
+                                <th scope="col">Bagian Alat</th>
+                                <th scope="col">Kondisi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Sistem Catu Daya</td>
+                                <td>
+                                    {{ form.ctrl_panel_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Kabel</td>
+                                <td>
+                                    {{ form.cmd_arm_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Bucky Table</td>
+                                <td>
+                                    {{ form.bucky_tbl_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>Bucky Stand</td>
+                                <td>
+                                    {{ form.bucky_std_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">5</th>
+                                <td>Tube Stand</td>
+                                <td>
+                                    {{ form.tube_std_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">6</th>
+                                <td>Generator</td>
+                                <td>
+                                    {{ form.generator_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">7</th>
+                                <td>Tuas Penyagga Tabung</td>
+                                <td>
+                                    {{ form.tube_spt_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">8</th>
+                                <td>Sambungan Kabel Elektrikal</td>
+                                <td>
+                                    {{ form.el_cable_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">9</th>
+                                <td>H.T. Kabel</td>
+                                <td>
+                                    {{ form.htt_cable_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">10</th>
+                                <td>Sistem Catu Daya</td>
+                                <td>
+                                    {{ form.psu_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">11</th>
+                                <td>Kabel Daya</td>
+                                <td>
+                                    {{ form.cable_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">12</th>
+                                <td>Saklar ON/OFF</td>
+                                <td>
+                                    {{ form.sw_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">13</th>
+                                <td>Lampu Indikator</td>
+                                <td>
+                                    {{ form.ind_lamp_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">14</th>
+                                <td>Lampu Kolimator</td>
+                                <td>
+                                    {{ form.col_lamp_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">15</th>
+                                <td>Selektor: kV dan mAs</td>
+                                <td>
+                                    {{ form.sel_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">16</th>
+                                <td>Gerakan dan Pengunci Tabung X-Ray</td>
+                                <td>
+                                    {{ form.tube_lock_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">17</th>
+                                <td>Panel Kontrol</td>
+                                <td>
+                                    {{ form.panel_ctl_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">28</th>
+                                <td>Pergerakan dan Pengunci Bucky </td>
+                                <td>
+                                    {{ form.buck_lock_cond|as_crispy_field }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4>Pemeriksaan Kinerja Alat dan Aspek Keselamatan Kerja</h4>
+                    <p>Aspek Keselataman Kerja, mengacu pada Standard IEC 601-1-1 Class I Type dan Kinerja mengacu pada
+                        Standard ECRI No. 472-0595.</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Uraian</th>
+                                <th scope="col">Standard</th>
+                                <th scope="col">Toleransi</th>
+                                <th scope="col">Setting</th>
+                                <th scope="col">Keluaran</th>
+                                <th scope="col">Baik</th>
+                                <th scope="col">Tidak Baik</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <th scope="row">Akurasi kVp</th>
+                                <th scope="row">{{ form.kvp_std|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kvp_tol|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kvp_set|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kvp_output|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kvp_ok|as_crispy_field }}</th>
+                                <th scope="row">{{ form.kvp_not|as_crispy_field }}</th>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Akurasi mAs</th>
+                                <th scope="row">{{ form.ma_std|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma_tol|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma_set|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma_output|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma_ok|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ma_not|as_crispy_field }}</th>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Linearitas mAs</th>
+                                <th scope="row">{{ form.ln_ma_std|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ln_ma_tol|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ln_ma_set|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ln_ma_output|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ln_ma_ok|as_crispy_field }}</th>
+                                <th scope="row">{{ form.ln_ma_not|as_crispy_field }}</th>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Hasil eksposi</th>
+                                <th scope="row">{{ form.expose_std|as_crispy_field }}</th>
+                                <th scope="row">{{ form.expose_tol|as_crispy_field }}</th>
+                                <th scope="row">{{ form.expose_set|as_crispy_field }}</th>
+                                <th scope="row">{{ form.expose_output|as_crispy_field }}</th>
+                                <th scope="row">{{ form.exp_ok|as_crispy_field }}</th>
+                                <th scope="row">{{ form.exp_not|as_crispy_field }}</th>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Luas Penyinaran</th>
+                                <th scope="row">{{ form.rad_area_std|as_crispy_field }}</th>
+                                <th scope="row">{{ form.rad_area_tol|as_crispy_field }}</th>
+                                <th scope="row">{{ form.rad_area_set|as_crispy_field }}</th>
+                                <th scope="row">{{ form.rad_area_output|as_crispy_field }}</th>
+                                <th scope="row">{{ form.rad_area_ok|as_crispy_field }}</th>
+                                <th scope="row">{{ form.rad_area_not|as_crispy_field }}</th>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Indikator Eksposi</th>
+                                <th scope="row">{{ form.exp_in_std|as_crispy_field }}</th>
+                                <th scope="row">{{ form.exp_in_tol|as_crispy_field }}</th>
+                                <th scope="row">{{ form.exp_in_set|as_crispy_field }}</th>
+                                <th scope="row">{{ form.exp_in_output|as_crispy_field }}</th>
+                                <th scope="row">{{ form.exp_in_ok|as_crispy_field }}</th>
+                                <th scope="row">{{ form.exp_in_not|as_crispy_field }}</th>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Arus Bocor pada Chasis</th>
+                                <th scope="row">{{ form.amp_leak_std|as_crispy_field }}</th>
+                                <th scope="row">{{ form.amp_leak_tol|as_crispy_field }}</th>
+                                <th scope="row">{{ form.amp_leak_set|as_crispy_field }}</th>
+                                <th scope="row">{{ form.amp_leak_output|as_crispy_field }}</th>
+                                <th scope="row">{{ form.amp_leak_ok|as_crispy_field }}</th>
+                                <th scope="row">{{ form.amp_leak_not|as_crispy_field }}</th>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Tahanan Kabel Pembumian Alat</th>
+                                <th scope="row">{{ form.cbl_gnd_std|as_crispy_field }}</th>
+                                <th scope="row">{{ form.cbl_gnd_tol|as_crispy_field }}</th>
+                                <th scope="row">{{ form.cbl_gnd_set|as_crispy_field }}</th>
+                                <th scope="row">{{ form.cbl_gnd_output|as_crispy_field }}</th>
+                                <th scope="row">{{ form.cbl_gnd_ok|as_crispy_field }}</th>
+                                <th scope="row">{{ form.cbl_gnd_not|as_crispy_field }}</th>
+                            </tr>
+
+
+                            <tr>
+                                <th scope="row">Kebocoran Radiasi</th>
+                                <th scope="row">{{ form.rad_leak_std|as_crispy_field }}</th>
+                                <th scope="row">{{ form.rad_leak_tol|as_crispy_field }}</th>
+                                <th scope="row">{{ form.rad_leak_set|as_crispy_field }}</th>
+                                <th scope="row">{{ form.rad_leak_output|as_crispy_field }}</th>
+                                <th scope="row">{{ form.rad_leak_ok|as_crispy_field }}</th>
+                                <th scope="row">{{ form.rad_leak_not|as_crispy_field }}</th>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
+                    <p>Kesimpulan</p>
+                    <p>Berdasarkan hasil preventive maintenance, dapat disimpulkan bahwa:</p>
+
+                    <div class="row">
+                        <div class="mb-3 col-md-6 mb-0">
+                            {{ form.is_passed|as_crispy_field }}
+                        </div>
+                        <div class="mb-3 col-md-6 mb-0">
+                            {{ form.is_failed|as_crispy_field }}
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn btn-primary">Create</button>
                     <a href="{% url 'home_maintenance' %}" class="btn btn-secondary">Cancel</a>
                 </form>
@@ -24,4 +310,4 @@
         </div>
     </div>
     {% endif %}
-    {% endblock %}
+{% endblock %}

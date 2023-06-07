@@ -2,7 +2,7 @@
 
 {% block body %}
 <!-- 
-    Forms -->
+    penerimaans -->
 <h3 class="m-4">Uji Penerimaan</h3>
 <div class="row">
     <div class="col-12">
@@ -61,7 +61,8 @@
                                                 <div class="modal-body">
                                                     <ul class="list-unlysted">
                                                         <li>Date: <strong>{{penerimaan.task_date}}</strong></li>
-                                                        <li>Machine: <strong>{{penerimaan.machine}}</strong></li>
+                                                        <li>Machine: <strong>{{penerimaan.htt_brand}}
+                                                                {{penerimaan.htt_model}}</strong></li>
                                                         <li>Location: <strong>{{penerimaan.location}}</strong>
                                                         </li>
                                                         <li>Status:
@@ -74,6 +75,351 @@
                                                             {% endif %}
                                                         </li>
                                                     </ul>
+
+                                                    {{ penerimaan.task_date }}
+                                                    {{ penerimaan.tech_name }}
+
+                                                    <div class="row">
+                                                        <div class="mb-3 col-md-6 mb-0">
+                                                            {{ penerimaan.location }}
+                                                        </div>
+                                                        <div class="mb-3 col-md-6 mb-0">
+                                                            {{ penerimaan.hos_unit }}
+                                                        </div>
+                                                    </div>
+                                                    <p>Kelengkapan Sistem</p>
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Nama Sistem</th>
+                                                                <th scope="col">Merk</th>
+                                                                <th scope="col">Model</th>
+                                                                <th scope="col">Serial Number</th>
+                                                                <th scope="col">Check</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th scope="row">Tube Stand</th>
+                                                                <td>{{ penerimaan.tube_std_brand }}</td>
+                                                                <td>{{ penerimaan.tube_std_model }}</td>
+                                                                <td>{{ penerimaan.tube_std_serial }}</td>
+                                                                <td>{{ penerimaan.tube_std_is_okay }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Tube Support</th>
+                                                                <td>{{ penerimaan.tube_spt_brand }}</td>
+                                                                <td>{{ penerimaan.tube_spt_model }}</td>
+                                                                <td>{{ penerimaan.tube_spt_serial }}</td>
+                                                                <td>{{ penerimaan.tube_spt_is_okay }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">X-Ray Tube Assembly</th>
+                                                                <td>{{ penerimaan.tube_asb_brand }}</td>
+                                                                <td>{{ penerimaan.tube_asb_model }}</td>
+                                                                <td>{{ penerimaan.tube_asb_serial }}</td>
+                                                                <td>{{ penerimaan.tube_asb_is_okay }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">X-Ray Beam Limiting Device</th>
+                                                                <td>{{ penerimaan.beam_ld_brand }}</td>
+                                                                <td>{{ penerimaan.beam_ld_model }}</td>
+                                                                <td>{{ penerimaan.beam_ld_serial }}</td>
+                                                                <td>{{ penerimaan.beam_ld_is_okay }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">X-Ray High-voltage Generator</th>
+                                                                <td>{{ penerimaan.htt_brand }}</td>
+                                                                <td>{{ penerimaan.htt_model }}</td>
+                                                                <td>{{ penerimaan.htt_serial }}</td>
+                                                                <td>{{ penerimaan.htt_is_okay }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Floating Bucky Table</th>
+                                                                <td>{{ penerimaan.flo_buck_brand }}</td>
+                                                                <td>{{ penerimaan.flo_buck_model }}</td>
+                                                                <td>{{ penerimaan.flo_buck_serial }}</td>
+                                                                <td>{{ penerimaan.flo_buck_is_okay }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Elevator-type Bucky Table</th>
+                                                                <td>{{ penerimaan.lev_buck_brand }}</td>
+                                                                <td>{{ penerimaan.lev_buck_model }}</td>
+                                                                <td>{{ penerimaan.lev_buck_serial }}</td>
+                                                                <td>{{ penerimaan.lev_buck_is_okay }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Bucky Stand</th>
+                                                                <td>{{ penerimaan.buck_std_brand }}</td>
+                                                                <td>{{ penerimaan.buck_std_model }}</td>
+                                                                <td>{{ penerimaan.buck_std_serial }}</td>
+                                                                <td>{{ penerimaan.buck_std_is_okay }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Automatic Control Unit</th>
+                                                                <td>{{ penerimaan.acu_brand }}</td>
+                                                                <td>{{ penerimaan.acu_model }}</td>
+                                                                <td>{{ penerimaan.acu_serial }}</td>
+                                                                <td>{{ penerimaan.acu_is_okay }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Support Fork</th>
+                                                                <td>{{ penerimaan.fork_brand }}</td>
+                                                                <td>{{ penerimaan.fork_model }}</td>
+                                                                <td>{{ penerimaan.fork_serial }}</td>
+                                                                <td>{{ penerimaan.fork_is_okay }}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <p>Inspeksi Visual</p>
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Item</th>
+                                                                <th scope="col">Hasil</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th scope="row">Koneksi Kabel Grounding</th>
+                                                                <td>{{ penerimaan.gnd_cable }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Line Voltage</th>
+                                                                <td>{{ penerimaan.ln_vol }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Koneksi dan kekencangan kabel High
+                                                                    Voltage</th>
+                                                                <td>{{ penerimaan.hv_cable }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Sambungan dan penempatan kabel Low
+                                                                    Voltage</th>
+                                                                <td>{{ penerimaan.lv_cable }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Instalasi rel lantai dan rel atas</th>
+                                                                <td>{{ penerimaan.rail }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Unit tiang pegangan tabung sinar-X</th>
+                                                                <td>{{ penerimaan.std_spt }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Assembly tabung sinar-X</th>
+                                                                <td>{{ penerimaan.asb_tube }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Assembly kolimator</th>
+                                                                <td>{{ penerimaan.asb_col }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Lampu indikator</th>
+                                                                <td>{{ penerimaan.lamp }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Kekencangan baut-baut pengaman</th>
+                                                                <td>{{ penerimaan.bout }}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <p>Uji Fungsi</p>
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Item</th>
+                                                                <th scope="col">Kriteria</th>
+                                                                <th scope="col">Hasil</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            <tr>
+                                                                <th scope="row">Panel Operasi Generator</th>
+                                                                <th scope="row">Kondisi X-Ray dapat diatur dengan benar
+                                                                </th>
+                                                                <th scope="row">{{ penerimaan.gen_item1 }}
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Urutan operasi Generator</th>
+                                                                <th scope="row">Urutan spesifik nilai pembangkit sinar-X
+                                                                    dapat bekerja dengan baik</th>
+                                                                <th scope="row">{{ penerimaan.gen_item2 }}
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Keluaran X-Ray Generator</th>
+                                                                <th scope="row">Pastikan besaran kV dengan toleransi
+                                                                    ±10% dan besaran mA dengan
+                                                                    toleransi ±20%. Lakukan adjustment apabila nilai
+                                                                    diluar batas toleransi</th>
+                                                                <th scope="row">{{ penerimaan.gen_item3 }}
+                                                                </th>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th scope="row">Panel Operasi Tube Stand</th>
+                                                                <th scope="row">Pastikan masing-masing SW operasional
+                                                                    dapat berfungsi dengan baik</th>
+                                                                <th scope="row">{{ penerimaan.tube_std_item1
+                                                                    }}</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Penunjang Unit Operasional Tube Stand
+                                                                </th>
+                                                                <th scope="row">Pastikan bahwa masing-masing pergerakan
+                                                                    dapat berfungsi dengan baik</th>
+                                                                <th scope="row">{{ penerimaan.tube_std_item2
+                                                                    }}</th>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th scope="row">Pengecekan Kontrol SW Tube Support:
+                                                                    1. SW rotasi
+                                                                    2. SW lepas seluruh rem
+                                                                    3. SW rem kunci lepas pergerakan lateral
+                                                                    4. SW rem kunci lepas pergerakan longitudinal
+                                                                    5. SW rem kunci lepas pergerakan vertikal
+                                                                    6. Saklar berputar
+                                                                    7. SW satu lengan lepas seluruh rem
+                                                                    8. SW LINK
+                                                                    9. SW emergency stop
+                                                                </th>
+                                                                <th scope="row">Seluruh kuncian harus bisa lepas</th>
+                                                                <th scope="row">{{ penerimaan.tube_sp_item1 }}
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Pengecekan Indikator Status Tube Support
+                                                                </th>
+                                                                <th scope="row">Pastikan seluruh indikator dapat menyala
+                                                                    dengan sesuai</th>
+                                                                <th scope="row">{{ penerimaan.tube_sp_item2 }}
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Pemeriksaan pengaturan luas lapangan
+                                                                    kolimasi Beam Limiting Device</th>
+                                                                <th scope="row">Pastikan luas lapangan kolimasi dapat
+                                                                    diatur dengan mengatur knob pada
+                                                                    panel operasi</th>
+                                                                <th scope="row">{{ penerimaan.bld_item1 }}
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Pemeriksaan tampilan display Beam
+                                                                    Limiting Device</th>
+                                                                <th scope="row">Pastikan tampilan display berubah saat
+                                                                    melakukan buka tutup luas
+                                                                    lapangan kolimasi </th>
+                                                                <th scope="row">{{ penerimaan.bld_item2 }}
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Periksa lampu luas lapangan kolimasi
+                                                                    Beam Limiting Device</th>
+                                                                <th scope="row">Pastikan lampu menyala dan alam mati
+                                                                    dengan sendirinya </th>
+                                                                <th scope="row">{{ penerimaan.bld_item3 }}
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Periksa lampu pemilihan bucky Beam
+                                                                    Limiting Device</th>
+                                                                <th scope="row">Tekan saklar dan pastikan lampu bucky
+                                                                    menyala</th>
+                                                                <th scope="row">{{ penerimaan.bld_item4 }}
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Periksa display SID Beam Limiting Device
+                                                                </th>
+                                                                <th scope="row">Pastikan SID dan PBL SID pada PBL
+                                                                    menyala</th>
+                                                                <th scope="row">{{ penerimaan.bld_item5 }}
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Periksa filter Beam Quality Pada Beam
+                                                                    Limiting Device</th>
+                                                                <th scope="row">Pastikan filter dapat dicabut dan
+                                                                    dipasang, begitu pula lampu
+                                                                    indikatornya</th>
+                                                                <th scope="row">{{ penerimaan.bld_item6 }}
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Periksa kunci kolimator pada Beam
+                                                                    Limiting Device</th>
+                                                                <th scope="row">Pastikan filter dapat dicabut dan
+                                                                    dipasang, begitu pula lampu
+                                                                    indikatornya</th>
+                                                                <th scope="row">{{ penerimaan.bld_item7 }}
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Periksa saklar darurat dan saklar LINK
+                                                                    pada Automatic Control Unit</th>
+                                                                <th scope="row">Power seharusnya mati ketika tombol
+                                                                    darurat ditekan dan LINK gerakan
+                                                                    vertical bekerja dengan baik</th>
+                                                                <th scope="row">{{ penerimaan.acu_item1 }}
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Fungsi footswitch Bucky Table</th>
+                                                                <th scope="row">Pastikan pergerakan table bekerja dengan
+                                                                    normal</th>
+                                                                <th scope="row">{{ penerimaan.bucky_tbl_item1
+                                                                    }}</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Fungsi handswicth Bucky Table</th>
+                                                                <th scope="row">Pasitikan bahwa fungsi expose dapat
+                                                                    dioperasikan dengan handswitch</th>
+                                                                <th scope="row">{{ penerimaan.bucky_tbl_item2
+                                                                    }}</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Pemeriksaan suplai daya Bucky Stand</th>
+                                                                <th scope="row">Pastikan sistem menyala ketika generator
+                                                                    dinyalakan</th>
+                                                                <th scope="row">{{ penerimaan.bucky_std_item1
+                                                                    }}</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Pergerakan vertikal Bucky Stand</th>
+                                                                <th scope="row">Pastikan pergerakan vertikal bekerja
+                                                                    dengan normal</th>
+                                                                <th scope="row">{{ penerimaan.bucky_std_item2
+                                                                    }}</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Pemeriksaan kualitas gambar sistem</th>
+                                                                <th scope="row">Pastikan tidak ada goresan yang terlihat
+                                                                    pada gambar. Dalam kasus FPD,
+                                                                    tergantung pada kombinas sistem radiografi digital
+                                                                </th>
+                                                                <th scope="row">{{ penerimaan.system }}</th>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <p>Kesimpulan</p>
+                                                    <p>Berdasarkan hasil uji penerimaan, dapat disimpulkan bahwa:</p>
+
+                                                    <div class="row">
+                                                        <div class="mb-3 col-md-6 mb-0">
+                                                            {{ penerimaan.is_passed }}
+                                                        </div>
+                                                        <div class="mb-3 col-md-6 mb-0">
+                                                            {{ penerimaan.is_failed }}
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-primary"
@@ -108,11 +454,11 @@
                                                     <p>Are you sure?</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <form action="{% url 'delete_penerimaan' penerimaan.id %}"
+                                                    <penerimaan action="{% url 'delete_penerimaan' penerimaan.id %}"
                                                         method="POST">
                                                         {% csrf_token %}
                                                         <input type="submit" class="btn btn-primary" value="delete">
-                                                    </form>
+                                                    </penerimaan>
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Cancel</button>
                                                 </div>

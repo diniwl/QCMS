@@ -29,7 +29,7 @@
                             <tr>
                                 <!-- from models.py -->
                                 <td>{{ukes.task_date}}</td>
-                                <td>{{ukes.machine}}</td>
+                                <td>{{ukes.xray_gen_brand}} {{ukes.xray_gen_type}}</td>
                                 <td>{{ukes.location}}</td>
                                 <td> {% if ukes.is_passed %}
                                     <strong>Passed</strong>
@@ -62,7 +62,7 @@
                                                 <div class="modal-body">
                                                     <ul class="list-unlysted">
                                                         <li>Date: <strong>{{ukes.task_date}}</strong></li>
-                                                        <li>Machine: <strong>{{ukes.machine}}</strong></li>
+                                                        <li>Machine: <strong>{{ukes.xray_gen_brand}} {{ukes.xray_gen_type}}</strong></li>
                                                         <li>Location: <strong>{{ukes.location}}</strong>
                                                         </li>
                                                         <li>Status:

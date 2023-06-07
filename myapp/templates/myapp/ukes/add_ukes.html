@@ -1,4 +1,5 @@
 {% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block body %}
 <h3 class="text-center m-4">Add Uji Kesesuaian</h3>
@@ -9,13 +10,514 @@
 </div>
 {% else %}
 <div class="row justify-content-center">
-    <div class="col-6">
+    <div class="col-12">
         <div class="card bg-secondary mb-3">
             <div class="card-header">New Uji Kesesuaian</div>
             <div class="card-body">
                 <form action="{% url 'add_ukes' %}" method="POST">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {{ form.task_date|as_crispy_field }}
+                    {{ form.location|as_crispy_field }}
+                    {{ form.tech_name|as_crispy_field }}
+                    <div class="row">
+                        <p>Informasi Tabung X-Ray</p>
+                        <div class="mb-3 col-md-4 mb-0">
+                            {{ form.xray_tube_brand|as_crispy_field }}
+                        </div>
+                        <div class="mb-3 col-md-4 mb-0">
+                            {{ form.xray_tube_type|as_crispy_field }}
+                        </div>
+                        <div class="mb-3 col-md-4 mb-0">
+                            {{ form.xray_tube_serial|as_crispy_field }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <p>Informasi Generator X-Ray</p>
+                        <div class="mb-3 col-md-4 mb-0">
+                            {{ form.xray_gen_brand|as_crispy_field }}
+                        </div>
+                        <div class="mb-3 col-md-4 mb-0">
+                            {{ form.xray_gen_type|as_crispy_field }}
+                        </div>
+                        <div class="mb-3 col-md-4 mb-0">
+                            {{ form.xray_gen_serial|as_crispy_field }}
+                        </div>
+                    </div>
+
+                    <h3>A.Kolimasi Berkas Sinar-X</h3>
+                    <h4>1. Iluminasi</h4>
+                    <p>SID : 100</p>
+                    <p>Lapangan : 25 x 25 cm</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Rata-rata (Lux)</th>
+                                <th scope="col">Cahaya Latar (Lux)</th>
+                                <th scope="col">FK</th>
+                                <th scope="col">Hasil Uji</th>
+                                <th scope="col">Nilai Lolos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">{{ form.lux_avg|as_crispy_field }}</th>
+                                <td>{{ form.lux_bg|as_crispy_field }}</td>
+                                <td>{{ form.lux_fk|as_crispy_field }}</td>
+                                <td>{{ form.lux_fin|as_crispy_field }}</td>
+                                <td>≥ 100 Lux</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>2. Selisih Lapangan Kolimasi Dengan Berkas Sinar-X</h4>
+                    <p>kVp-set : 60</p>
+                    <p>mAs-set : 5</p>
+                    <p>SID : 100</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">∆x</th>
+                                <th scope="col">∆y</th>
+                                <th scope="col">∆X+∆Y</th>
+                                <th scope="col">Nilai Lolos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">{{ form.delta_x|as_crispy_field }}</th>
+                                <td>{{ form.delta_y|as_crispy_field }}</td>
+                                <td>{{ form.sigma_xy|as_crispy_field }}</td>
+                                <td>∆X dan ∆Y≤2% SID,
+                                    |∆X|+|∆y|≤3% SID
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>3. Ketegaklurusan Berkas Sinar-X</h4>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Hasil Ukur</th>
+                                <th scope="col">Nilai Lolos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">{{ form.degree|as_crispy_field }}</th>
+                                <td>3°</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>B. Generator dan Tabung Sinar-X</h3>
+                    <h4>1. Uji Akurasi Tegangan (kVp) dan Informasi Data Dosis Keluaran Radiasi
+                    </h4>
+                    <p>mA set : 200</p>
+                    <p>s set : 0,1</p>
+                    <p>SID : 100</p>
+                    <p>Fokus : besar</p>
+                    <p>Luas lapangan : 25 cm x 25 cm</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">kVp acuan</th>
+                                <th scope="col">kVp set</th>
+                                <th scope="col">kVp ukur</th>
+                                <th scope="col">error(%)</th>
+                                <th scope="col">Nilai Lolos</th>
+                                <th scope="col">μGy</th>
+                                <th scope="col">μGy/mAs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">50</th>
+                                <td>{{ form.kv_set1|as_crispy_field }}</td>
+                                <td>{{ form.kv_msr1|as_crispy_field }}</td>
+                                <td>{{ form.kverror1|as_crispy_field }}</td>
+                                <td>error max 10%</td>
+                                <td>{{ form.kvdose1|as_crispy_field }}</td>
+                                <td>{{ form.kvdose_ma1|as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">60</th>
+                                <td>{{ form.kv_set2|as_crispy_field }}</td>
+                                <td>{{ form.kv_msr2|as_crispy_field }}</td>
+                                <td>{{ form.kverror2|as_crispy_field }}</td>
+                                <td>error max ≤10%</td>
+                                <td>{{ form.kvdose2|as_crispy_field }}</td>
+                                <td>{{ form.kvdose_ma2|as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">70</th>
+                                <td>{{ form.kv_set3|as_crispy_field }}</td>
+                                <td>{{ form.kv_msr3|as_crispy_field }}</td>
+                                <td>{{ form.kverror3|as_crispy_field }}</td>
+                                <td>error max ≤10%</td>
+                                <td>{{ form.kvdose3|as_crispy_field }}</td>
+                                <td>{{ form.kvdose_ma3|as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">80</th>
+                                <td>{{ form.kv_set4|as_crispy_field }}</td>
+                                <td>{{ form.kv_msr4|as_crispy_field }}</td>
+                                <td>{{ form.kverror4|as_crispy_field }}</td>
+                                <td>error max ≤10%</td>
+                                <td>{{ form.kvdose4|as_crispy_field }}</td>
+                                <td>{{ form.kvdose_ma4|as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">90</th>
+                                <td>{{ form.kv_set5|as_crispy_field }}</td>
+                                <td>{{ form.kv_msr5|as_crispy_field }}</td>
+                                <td>{{ form.kverror5|as_crispy_field }}</td>
+                                <td>error max ≤10%</td>
+                                <td>{{ form.kvdose5|as_crispy_field }}</td>
+                                <td>{{ form.kvdose_ma5|as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">102</th>
+                                <td>{{ form.kv_set6|as_crispy_field }}</td>
+                                <td>{{ form.kv_msr6|as_crispy_field }}</td>
+                                <td>{{ form.kverror6|as_crispy_field }}</td>
+                                <td>error max ≤10%</td>
+                                <td>{{ form.kvdose6|as_crispy_field }}</td>
+                                <td>{{ form.kvdose_ma6|as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">109</th>
+                                <td>{{ form.kv_set7|as_crispy_field }}</td>
+                                <td>{{ form.kv_msr7|as_crispy_field }}</td>
+                                <td>{{ form.kverror7|as_crispy_field }}</td>
+                                <td>error max ≤10%</td>
+                                <td>{{ form.kvdose7|as_crispy_field }}</td>
+                                <td>{{ form.kvdose_ma7|as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">117</th>
+                                <td>{{ form.kv_set8|as_crispy_field }}</td>
+                                <td>{{ form.kv_msr8|as_crispy_field }}</td>
+                                <td>{{ form.kverror8|as_crispy_field }}</td>
+                                <td>error max ≤10%</td>
+                                <td>{{ form.kvdose8|as_crispy_field }}</td>
+                                <td>{{ form.kvdose_ma8|as_crispy_field }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>2. Uji Akurasi Waktu Penyinaran
+                    </h4>
+                    <p>kVp set : 70</p>
+                    <p>mA set : 200</p>
+                    <p>SID : 100</p>
+                    <p>Fokus : besar</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">ms acuan</th>
+                                <th scope="col">ms set</th>
+                                <th scope="col">ms ukur</th>
+                                <th scope="col">error(%)</th>
+                                <th scope="col">Nilai Lolos</th>
+                                <th scope="col">μGy</th>
+                                <th scope="col">μGy/mAs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">50</th>
+                                <td>{{ form.ms_set1|as_crispy_field }}</td>
+                                <td>{{ form.ms_msr1|as_crispy_field }}</td>
+                                <td>{{ form.mserror1|as_crispy_field }}</td>
+                                <td>error max ≤10%</td>
+                                <td>{{ form.msdose1|as_crispy_field }}</td>
+                                <td>{{ form.msdose_ma1|as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">100</th>
+                                <td>{{ form.ms_set2|as_crispy_field }}</td>
+                                <td>{{ form.ms_msr2|as_crispy_field }}</td>
+                                <td>{{ form.mserror2|as_crispy_field }}</td>
+                                <td>error max ≤10%</td>
+                                <td>{{ form.msdose2|as_crispy_field }}</td>
+                                <td>{{ form.msdose_ma2|as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">200</th>
+                                <td>{{ form.ms_set3|as_crispy_field }}</td>
+                                <td>{{ form.ms_msr3|as_crispy_field }}</td>
+                                <td>{{ form.mserror3|as_crispy_field }}</td>
+                                <td>error max ≤10%</td>
+                                <td>{{ form.msdose3|as_crispy_field }}</td>
+                                <td>{{ form.msdose_ma3|as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">400</th>
+                                <td>{{ form.ms_set4|as_crispy_field }}</td>
+                                <td>{{ form.ms_msr4|as_crispy_field }}</td>
+                                <td>{{ form.mserror4|as_crispy_field }}</td>
+                                <td>error max ≤10%</td>
+                                <td>{{ form.msdose4|as_crispy_field }}</td>
+                                <td>{{ form.msdose_ma4|as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">800</th>
+                                <td>{{ form.ms_set5|as_crispy_field }}</td>
+                                <td>{{ form.ms_msr5|as_crispy_field }}</td>
+                                <td>{{ form.mserror5|as_crispy_field }}</td>
+                                <td>error max ≤10%</td>
+                                <td>{{ form.msdose5|as_crispy_field }}</td>
+                                <td>{{ form.msdose_ma5|as_crispy_field }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>3. Uji Linearitas Keluaran Radiasi
+                    </h4>
+                    <p>kVp set : 70</p>
+                    <p>s set : 0,1</p>
+                    <p>SID : 100</p>
+                    <p>Fokus : besar</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">mA acuan</th>
+                                <th scope="col">mAs</th>
+                                <th scope="col">kVp ukur</th>
+                                <th scope="col">μGy</th>
+                                <th scope="col">μGy/mAs</th>
+                                <th scope="col">CL</th>
+                                <th scope="col">Nilai Lolos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">160</th>
+                                <td>{{ form.lin_ma1|as_crispy_field }}</td>
+                                <td>{{ form.lin_kv1|as_crispy_field }}</td>
+                                <td>{{ form.lin_dose1|as_crispy_field }}</td>
+                                <td>{{ form.lin_dosema1|as_crispy_field }}</td>
+                                <td>{{ form.lin_cl1|as_crispy_field }}</td>
+                                <td>CL≤0,1</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">200</th>
+                                <td>{{ form.lin_ma2|as_crispy_field }}</td>
+                                <td>{{ form.lin_kv2|as_crispy_field }}</td>
+                                <td>{{ form.lin_dose2|as_crispy_field }}</td>
+                                <td>{{ form.lin_dosema2|as_crispy_field }}</td>
+                                <td>{{ form.lin_cl2|as_crispy_field }}</td>
+                                <td>CL≤0,1</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">320</th>
+                                <td>{{ form.lin_ma3|as_crispy_field }}</td>
+                                <td>{{ form.lin_kv3|as_crispy_field }}</td>
+                                <td>{{ form.lin_dose3|as_crispy_field }}</td>
+                                <td>{{ form.lin_dosema3|as_crispy_field }}</td>
+                                <td>{{ form.lin_cl3|as_crispy_field }}</td>
+                                <td>CL≤0,1</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">400</th>
+                                <td>{{ form.lin_ma4|as_crispy_field }}</td>
+                                <td>{{ form.lin_kv4|as_crispy_field }}</td>
+                                <td>{{ form.lin_dose4|as_crispy_field }}</td>
+                                <td>{{ form.lin_dosema4|as_crispy_field }}</td>
+                                <td>{{ form.lin_cl4|as_crispy_field }}</td>
+                                <td>CL≤0,1</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">500</th>
+                                <td>{{ form.lin_ma5|as_crispy_field }}</td>
+                                <td>{{ form.lin_kv5|as_crispy_field }}</td>
+                                <td>{{ form.lin_dose5|as_crispy_field }}</td>
+                                <td>{{ form.lin_dosema5|as_crispy_field }}</td>
+                                <td>{{ form.lin_cl5|as_crispy_field }}</td>
+                                <td>CL≤0,1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>4. Uji Reproduksibilitas Tegangan Puncak (kVp), Waktu Penyinaran (s), dan Dosis
+                    </h4>
+                    <p>kVp set : 70</p>
+                    <p>s set : 0,1</p>
+                    <p>SID : 100</p>
+                    <p>Fokus : besar</p>
+                    <p>Nilai Lolos Uji: CV≤0,05</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">kV</th>
+                                <th scope="col">Waktu (s)</th>
+                                <th scope="col">μGy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Rata-rata</th>
+                                <td>{{ form.rep_kv_avg|as_crispy_field }}</td>
+                                <td>{{ form.rep_s_avg |as_crispy_field }}</td>
+                                <td>{{ form.rep_dose_avg|as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Standar Deviasi</th>
+                                <td>{{ form.rep_kv_std|as_crispy_field }}</td>
+                                <td>{{ form.rep_s_std|as_crispy_field }}</td>
+                                <td>{{ form.rep_dose_std|as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">CV</th>
+                                <td>{{ form.rep_kv_cv|as_crispy_field }}</td>
+                                <td>{{ form.rep_s_cv |as_crispy_field }}</td>
+                                <td>{{ form.rep_dose_cv|as_crispy_field }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>5. Uji Kualitas Berkas Sinar-X
+                    </h4>
+                    <p>mAs set : 20</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Filter Tambahan (mmAl)</th>
+                                <th scope="col">kV setting</th>
+                                <th scope="col">Hasil Ukur (mmAl)</th>
+                                <th scope="col">Nilai Lolos Uji (mmAl)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Dilepas</th>
+                                <td>70</td>
+                                <td>{{ form.al70_ls |as_crispy_field }}</td>
+                                <td>≥2,1</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Dilepas</th>
+                                <td>80</td>
+                                <td>{{ form.al80_ls |as_crispy_field }}</td>
+                                <td>≥2,3</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Permanen</th>
+                                <td>70</td>
+                                <td>{{ form.al70_pr |as_crispy_field }}</td>
+                                <td>≥2,1</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Permanen</th>
+                                <td>80</td>
+                                <td>{{ form.al80_pr |as_crispy_field }}</td>
+                                <td>≥2,3</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>6.	Uji Kebocoran Wadah Tabung
+                    </h4>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col"> </th>
+                                <th scope="col">Kondisi</th>
+                                <th scope="col">Posisi</th>
+                                <th scope="col">mGy/jam</th>
+                                <th scope="col">Nilai lolos uji
+                                    (mGy/jam)
+                                    </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">kVp Set</th>
+                                <td>{{ form.tb_leak_kvset |as_crispy_field }}</td>
+                                <td>Kanan</td>
+                                <td>{{ form.tb_leak_r |as_crispy_field }}</td>
+                                <td>≤1</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">kVp max</th>
+                                <td>{{ form.tb_leak_kvmax |as_crispy_field }}</td>
+                                <td>Depan</td>
+                                <td>{{ form.tb_leak_f |as_crispy_field }}</td>
+                                <td>≤1</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">mA Set</th>
+                                <td>{{ form.tb_leak_maset |as_crispy_field }}</td>
+                                <td>Kiri</td>
+                                <td>{{ form.tb_leak_l |as_crispy_field }}</td>
+                                <td>≤1</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">s Set</th>
+                                <td>{{ form.tb_leak_tset |as_crispy_field }}</td>
+                                <td>Kiri</td>
+                                <td>{{ form.tb_leak_u |as_crispy_field }}</td>
+                                <td>≤1</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">mA kontinu</th>
+                                <td>{{ form.tb_leak_mcont |as_crispy_field }}</td>
+                                <td>Belakang</td>
+                                <td>{{ form.tb_leak_bh |as_crispy_field }}</td>
+                                <td>≤1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>Status Uji Kesesuaian</p>
+
+                    <div class="row">
+                        <div class="mb-3 col-md-6 mb-0">
+                            <p>Alat layak digunakan:</p>
+                            {{ form.is_passed|as_crispy_field }}
+                        </div>
+                        <div class="mb-3 col-md-6 mb-0">
+                            <p>Alat TIDAK layak digunakan:</p>
+                            {{ form.is_failed|as_crispy_field }}
+                        </div>
+                    </div>
+                    
                     <button type="submit" class="btn btn-primary">Create</button>
                     <a href="{% url 'home_ukes' %}" class="btn btn-secondary">Cancel</a>
                 </form>

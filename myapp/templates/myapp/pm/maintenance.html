@@ -54,11 +54,14 @@
                                                 <div class="modal-body">
                                                     <ul class="list-unlysted">
                                                         <li>Date: <strong>{{maintenance.task_date}}</strong></li>
-                                                        <li>Machine: <strong>{{maintenance.xray_brand}} {{maintenance.xray_type}}</strong>
+                                                        <li>Machine: <strong>{{maintenance.xray_brand}}
+                                                                {{maintenance.xray_type}}</strong>
                                                         </li>
-                                                        <li>Serial number: <strong>{{maintenance.xray_serial}}</strong></li>
+                                                        <li>Serial number: <strong>{{maintenance.xray_serial}}</strong>
+                                                        </li>
                                                         <li>Location: <strong>{{maintenance.location}}</strong></li>
-                                                        <li>Hospital Unit: <strong>{{maintenance.hospital_unit}}</strong></li>
+                                                        <li>Hospital Unit:
+                                                            <strong>{{maintenance.hospital_unit}}</strong></li>
                                                     </ul>
                                                 </div>
                                                 <div class="modal-footer">
@@ -68,8 +71,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="{% url 'edit_maintenance' maintenance.id %}" class="btn btn-warning me-1"><i
-                                            class="fa-solid fa-pen-to-square fa-lg"></i></a>
+                                    <a href="{% url 'edit_maintenance' maintenance.id %}"
+                                        class="btn btn-warning me-1"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
 
                                     <button class="btn btn-danger" data-bs-toggle="modal"
                                         data-bs-target="#delete_maintenance{{maintenance.id}}"><i
@@ -79,7 +82,7 @@
                                                 Modal Delete Penerimaan -->
                                     <div class="modal" id="delete_maintenance{{maintenance.id}}" tabindex="-1"
                                         aria-labelledby="myModalLabel2" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-dialog modal-xl" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">
@@ -94,7 +97,8 @@
                                                     <p>Are you sure?</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <form action="{% url 'delete_maintenance' maintenance.id %}" method="POST">
+                                                    <form action="{% url 'delete_maintenance' maintenance.id %}"
+                                                        method="POST">
                                                         {% csrf_token %}
                                                         <input type="submit" class="btn btn-primary" value="delete">
                                                     </form>

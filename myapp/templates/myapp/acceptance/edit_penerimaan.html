@@ -1,4 +1,5 @@
 {% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block body %}
 <h3 class="text-center m-4">Edit Uji Penerimaan</h3>
@@ -9,13 +10,303 @@
 </div>
 {% else %}
 <div class="row justify-content-center">
-    <div class="col-6">
+    <div class="col-12">
         <div class="card bg-secondary mb-3">
             <div class="card-header">Edit Uji Penerimaan</div>
             <div class="card-body">
                 <form action="" method="POST">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {{ form.task_date|as_crispy_field }}
+                    {{ form.tech_name|as_crispy_field }}
+
+                    <div class="row">
+                        <div class="mb-3 col-md-6 mb-0">
+                            {{ form.location|as_crispy_field }}
+                        </div>
+                        <div class="mb-3 col-md-6 mb-0">
+                            {{ form.hos_unit|as_crispy_field }}
+                        </div>
+                    </div>
+                    <p>Kelengkapan Sistem</p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nama Sistem</th>
+                                <th scope="col">Merk</th>
+                                <th scope="col">Model</th>
+                                <th scope="col">Serial Number</th>
+                                <th scope="col">Check</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Tube Stand</th>
+                                <td>{{ form.tube_std_brand|as_crispy_field }}</td>
+                                <td>{{ form.tube_std_model|as_crispy_field }}</td>
+                                <td>{{ form.tube_std_serial|as_crispy_field }}</td>
+                                <td>{{ form.tube_std_is_okay|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Tube Support</th>
+                                <td>{{ form.tube_spt_brand|as_crispy_field }}</td>
+                                <td>{{ form.tube_spt_model|as_crispy_field }}</td>
+                                <td>{{ form.tube_spt_serial|as_crispy_field }}</td>
+                                <td>{{ form.tube_spt_is_okay|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">X-Ray Tube Assembly</th>
+                                <td>{{ form.tube_asb_brand|as_crispy_field }}</td>
+                                <td>{{ form.tube_asb_model|as_crispy_field }}</td>
+                                <td>{{ form.tube_asb_serial|as_crispy_field }}</td>
+                                <td>{{ form.tube_asb_is_okay|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">X-Ray Beam Limiting Device</th>
+                                <td>{{ form.beam_ld_brand|as_crispy_field }}</td>
+                                <td>{{ form.beam_ld_model|as_crispy_field }}</td>
+                                <td>{{ form.beam_ld_serial|as_crispy_field }}</td>
+                                <td>{{ form.beam_ld_is_okay|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">X-Ray High-voltage Generator</th>
+                                <td>{{ form.htt_brand|as_crispy_field }}</td>
+                                <td>{{ form.htt_model|as_crispy_field }}</td>
+                                <td>{{ form.htt_serial|as_crispy_field }}</td>
+                                <td>{{ form.htt_is_okay|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Floating Bucky Table</th>
+                                <td>{{ form.flo_buck_brand|as_crispy_field }}</td>
+                                <td>{{ form.flo_buck_model|as_crispy_field }}</td>
+                                <td>{{ form.flo_buck_serial|as_crispy_field }}</td>
+                                <td>{{ form.flo_buck_is_okay|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Elevator-type Bucky Table</th>
+                                <td>{{ form.lev_buck_brand|as_crispy_field }}</td>
+                                <td>{{ form.lev_buck_model|as_crispy_field }}</td>
+                                <td>{{ form.lev_buck_serial|as_crispy_field }}</td>
+                                <td>{{ form.lev_buck_is_okay|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Bucky Stand</th>
+                                <td>{{ form.buck_std_brand|as_crispy_field }}</td>
+                                <td>{{ form.buck_std_model|as_crispy_field }}</td>
+                                <td>{{ form.buck_std_serial|as_crispy_field }}</td>
+                                <td>{{ form.buck_std_is_okay|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Automatic Control Unit</th>
+                                <td>{{ form.acu_brand|as_crispy_field }}</td>
+                                <td>{{ form.acu_model|as_crispy_field }}</td>
+                                <td>{{ form.acu_serial|as_crispy_field }}</td>
+                                <td>{{ form.acu_is_okay|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Support Fork</th>
+                                <td>{{ form.fork_brand|as_crispy_field }}</td>
+                                <td>{{ form.fork_model|as_crispy_field }}</td>
+                                <td>{{ form.fork_serial|as_crispy_field }}</td>
+                                <td>{{ form.fork_is_okay|as_crispy_field }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>Inspeksi Visual</p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Item</th>
+                                <th scope="col">Hasil</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Koneksi Kabel Grounding</th>
+                                <td>{{ form.gnd_cable|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Line Voltage</th>
+                                <td>{{ form.ln_vol|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Koneksi dan kekencangan kabel High Voltage</th>
+                                <td>{{ form.hv_cable|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Sambungan dan penempatan kabel Low Voltage</th>
+                                <td>{{ form.lv_cable|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Instalasi rel lantai dan rel atas</th>
+                                <td>{{ form.rail|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Unit tiang pegangan tabung sinar-X</th>
+                                <td>{{ form.std_spt|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Assembly tabung sinar-X</th>
+                                <td>{{ form.asb_tube|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Assembly kolimator</th>
+                                <td>{{ form.asb_col|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Lampu indikator</th>
+                                <td>{{ form.lamp|as_crispy_field }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Kekencangan baut-baut pengaman</th>
+                                <td>{{ form.bout|as_crispy_field }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>Uji Fungsi</p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Item</th>
+                                <th scope="col">Kriteria</th>
+                                <th scope="col">Hasil</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <th scope="row">Panel Operasi Generator</th>
+                                <th scope="row">Kondisi X-Ray dapat diatur dengan benar</th>
+                                <th scope="row">{{ form.gen_item1|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Urutan operasi Generator</th>
+                                <th scope="row">Urutan spesifik nilai pembangkit sinar-X dapat bekerja dengan baik</th>
+                                <th scope="row">{{ form.gen_item2|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Keluaran X-Ray Generator</th>
+                                <th scope="row">Pastikan besaran kV dengan toleransi ±10% dan besaran mA dengan
+                                    toleransi ±20%. Lakukan adjustment apabila nilai diluar batas toleransi</th>
+                                <th scope="row">{{ form.gen_item3|as_crispy_field }}</th>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Panel Operasi Tube Stand</th>
+                                <th scope="row">Pastikan masing-masing SW operasional dapat berfungsi dengan baik</th>
+                                <th scope="row">{{ form.tube_std_item1|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Penunjang Unit Operasional Tube Stand</th>
+                                <th scope="row">Pastikan bahwa masing-masing pergerakan dapat berfungsi dengan baik</th>
+                                <th scope="row">{{ form.tube_std_item2|as_crispy_field }}</th>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Pengecekan Kontrol SW Tube Support:
+                                    1. SW rotasi
+                                    2. SW lepas seluruh rem
+                                    3. SW rem kunci lepas pergerakan lateral
+                                    4. SW rem kunci lepas pergerakan longitudinal
+                                    5. SW rem kunci lepas pergerakan vertikal
+                                    6. Saklar berputar
+                                    7. SW satu lengan lepas seluruh rem
+                                    8. SW LINK
+                                    9. SW emergency stop
+                                </th>
+                                <th scope="row">Seluruh kuncian harus bisa lepas</th>
+                                <th scope="row">{{ form.tube_sp_item1|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Pengecekan Indikator Status Tube Support</th>
+                                <th scope="row">Pastikan seluruh indikator dapat menyala dengan sesuai</th>
+                                <th scope="row">{{ form.tube_sp_item2|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Pemeriksaan pengaturan luas lapangan kolimasi Beam Limiting Device</th>
+                                <th scope="row">Pastikan luas lapangan kolimasi dapat diatur dengan mengatur knob pada
+                                    panel operasi</th>
+                                <th scope="row">{{ form.bld_item1|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Pemeriksaan tampilan display Beam Limiting Device</th>
+                                <th scope="row">Pastikan tampilan display berubah saat melakukan buka tutup luas
+                                    lapangan kolimasi </th>
+                                <th scope="row">{{ form.bld_item2|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Periksa lampu luas lapangan kolimasi Beam Limiting Device</th>
+                                <th scope="row">Pastikan lampu menyala dan alam mati dengan sendirinya </th>
+                                <th scope="row">{{ form.bld_item3|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Periksa lampu pemilihan bucky Beam Limiting Device</th>
+                                <th scope="row">Tekan saklar dan pastikan lampu bucky menyala</th>
+                                <th scope="row">{{ form.bld_item4|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Periksa display SID Beam Limiting Device</th>
+                                <th scope="row">Pastikan SID dan PBL SID pada PBL menyala</th>
+                                <th scope="row">{{ form.bld_item5|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Periksa filter Beam Quality Pada Beam Limiting Device</th>
+                                <th scope="row">Pastikan filter dapat dicabut dan dipasang, begitu pula lampu
+                                    indikatornya</th>
+                                <th scope="row">{{ form.bld_item6|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Periksa kunci kolimator pada Beam Limiting Device</th>
+                                <th scope="row">Pastikan filter dapat dicabut dan dipasang, begitu pula lampu
+                                    indikatornya</th>
+                                <th scope="row">{{ form.bld_item7|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Periksa saklar darurat dan saklar LINK pada Automatic Control Unit</th>
+                                <th scope="row">Power seharusnya mati ketika tombol darurat ditekan dan LINK gerakan
+                                    vertical bekerja dengan baik</th>
+                                <th scope="row">{{ form.acu_item1|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Fungsi footswitch Bucky Table</th>
+                                <th scope="row">Pastikan pergerakan table bekerja dengan normal</th>
+                                <th scope="row">{{ form.bucky_tbl_item1|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Fungsi handswicth Bucky Table</th>
+                                <th scope="row">Pasitikan bahwa fungsi expose dapat dioperasikan dengan handswitch</th>
+                                <th scope="row">{{ form.bucky_tbl_item2|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Pemeriksaan suplai daya Bucky Stand</th>
+                                <th scope="row">Pastikan sistem menyala ketika generator dinyalakan</th>
+                                <th scope="row">{{ form.bucky_std_item1|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Pergerakan vertikal Bucky Stand</th>
+                                <th scope="row">Pastikan pergerakan vertikal bekerja dengan normal</th>
+                                <th scope="row">{{ form.bucky_std_item2|as_crispy_field }}</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Pemeriksaan kualitas gambar sistem</th>
+                                <th scope="row">Pastikan tidak ada goresan yang terlihat pada gambar. Dalam kasus FPD,
+                                    tergantung pada kombinas sistem radiografi digital</th>
+                                <th scope="row">{{ form.system|as_crispy_field }}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>Kesimpulan</p>
+                    <p>Berdasarkan hasil uji penerimaan, dapat disimpulkan bahwa:</p>
+
+                    <div class="row">
+                        <div class="mb-3 col-md-6 mb-0">
+                            {{ form.is_passed|as_crispy_field }}
+                        </div>
+                        <div class="mb-3 col-md-6 mb-0">
+                            {{ form.is_failed|as_crispy_field }}
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                     <a href="{% url 'home_penerimaan' %}" class="btn btn-secondary">Cancel</a>
                 </form>

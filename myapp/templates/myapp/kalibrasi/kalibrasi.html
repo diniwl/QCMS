@@ -1,8 +1,9 @@
 {% extends 'myapp/base.html' %}
 
+
 {% block body %}
 <!-- 
-    Forms -->
+    kalibrasis -->
 <h3 class="m-4">Kalibrasi</h3>
 <div class="row">
     <div class="col-12">
@@ -29,7 +30,7 @@
                             <tr>
                                 <!-- from models.py -->
                                 <td>{{kalibrasi.task_date}}</td>
-                                <td>{{kalibrasi.machine}}</td>
+                                <td>{{kalibrasi.xray_tube_brand}} {{kalibrasi.xray_tube_type}}</td>
                                 <td>{{kalibrasi.location}}</td>
                                 <td> {% if kalibrasi.is_passed %}
                                     <strong>Passed</strong>
@@ -48,7 +49,7 @@
                                                 Modal View Schedule -->
                                     <div class="modal" id="myModal{{kalibrasi.id}}" tabindex="-1"
                                         aria-labelledby="myModalLabel1" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-dialog modal-xl" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">
@@ -60,21 +61,179 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <ul class="list-unlysted">
-                                                        <li>Date: <strong>{{kalibrasi.task_date}}</strong></li>
-                                                        <li>Machine: <strong>{{kalibrasi.machine}}</strong></li>
-                                                        <li>Location: <strong>{{kalibrasi.location}}</strong>
-                                                        </li>
-                                                        <li>Status:
-                                                            {% if kalibrasi.is_passed %}
-                                                            <strong>Passed</strong>
-                                                            {% elif kalibrasi.is_failed %}
-                                                            <strong>Failed</strong>
-                                                            {% else %}
-                                                            <strong>Pending</strong>
-                                                            {% endif %}
-                                                        </li>
-                                                    </ul>
+                                                    <p>Lokasi: {{ kalibrasi.location }}</p>
+                                                    <p>Nama Penguji Berkualifikasi: {{ kalibrasi.tech_name }}</p>
+                                                    <div class="row">
+                                                        <p>Informasi Tabung X-Ray</p>
+                                                        <div class="mb-3 col-md-4 mb-0">
+                                                            Merk Tabung: {{ kalibrasi.xray_tube_brand }}
+                                                        </div>
+                                                        <div class="mb-3 col-md-4 mb-0">
+                                                            Type Tabung: {{ kalibrasi.xray_tube_type }}
+                                                        </div>
+                                                        <div class="mb-3 col-md-4 mb-0">
+                                                            Nomor Serial Tabung: {{ kalibrasi.xray_tube_serial }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <p>Informasi Generator X-Ray</p>
+                                                        <div class="mb-3 col-md-4 mb-0">
+                                                            Merk Generator: {{ kalibrasi.xray_gen_brand }}
+                                                        </div>
+                                                        <div class="mb-3 col-md-4 mb-0">
+                                                            Type Generator: {{ kalibrasi.xray_gen_type }}
+                                                        </div>
+                                                        <div class="mb-3 col-md-4 mb-0">
+                                                            Nomor Serial Generator: {{ kalibrasi.xray_gen_serial }}
+                                                        </div>
+                                                    </div>
+
+                                                    <p>Kondisi Ruangan</p>
+
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"></th>
+                                                                <th scope="col">Sesudah</th>
+                                                                <th scope="col">Sebelum</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th scope="row">Temperatur</th>
+                                                                <td>
+                                                                    {{ kalibrasi.temp_before }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ kalibrasi.temp_after }}
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th scope="row">Humiditas</th>
+                                                                <td>
+                                                                    {{ kalibrasi.hum_before }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ kalibrasi.hum_after }}
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <p>Kalibrasi kV dengan mA konstan</p>
+
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">No.</th>
+                                                                <th scope="col">kV-set</th>
+                                                                <th scope="col">Pengukuran 1</th>
+                                                                <th scope="col">Pengukuran 2</th>
+                                                                <th scope="col">Pengukuran 3</th>
+                                                                <th scope="col">Rata-rata</th>
+                                                                <th scope="col">Deviasi</th>
+                                                                <th scope="col">Presentase</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th scope="row">1</th>
+                                                                <th scope="row">{{ kalibrasi.kv_set1 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv1 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv2 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv3 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv_avg1 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv_dev1 }}</th>
+                                                                <th scope="row">{{ kalibrasi.mkv_prc1 }}</th>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th scope="row">2</th>
+                                                                <th scope="row">{{ kalibrasi.kv_set2 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv4 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv5 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv6 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv_avg2 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv_dev2 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv_prc2 }}</th>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th scope="row">3</th>
+                                                                <th scope="row">{{ kalibrasi.kv_set3 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv7 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv8 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv9 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv_avg3 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv_dev3 }}</th>
+                                                                <th scope="row">{{ kalibrasi.kv_prc3 }}</th>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <p>Kalibrasi mA dengan kV konstan</p>
+
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">No.</th>
+                                                                <th scope="col">mA-set</th>
+                                                                <th scope="col">Pengukuran 1</th>
+                                                                <th scope="col">Pengukuran 2</th>
+                                                                <th scope="col">Pengukuran 3</th>
+                                                                <th scope="col">Rata-rata</th>
+                                                                <th scope="col">Deviasi</th>
+                                                                <th scope="col">Presentase</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th scope="row">1</th>
+                                                                <th scope="row">{{ kalibrasi.ma_set1 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma1 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma2 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma3 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma_avg1 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma_dev1 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma_prc1 }}</th>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th scope="row">2</th>
+                                                                <th scope="row">{{ kalibrasi.ma_set2 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma4 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma5 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma6 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma_avg2 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma_dev2 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma_prc2 }}</th>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <th scope="row">3</th>
+                                                                <th scope="row">{{ kalibrasi.ma_set3 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma7 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma8 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma9 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma_avg3 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma_dev3 }}</th>
+                                                                <th scope="row">{{ kalibrasi.ma_prc3 }}</th>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <p>Status Kalibrasi</p>
+
+                                                    {% if kalibrasi.is_passed %}
+                                                    <strong>Passed</strong>
+                                                    {% elif kalibrasi.is_failed %}
+                                                    <strong>Failed</strong>
+                                                    {% else %}
+                                                    <strong>Pending</strong>
+                                                    {% endif %}
+
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-primary"
@@ -109,11 +268,11 @@
                                                     <p>Are you sure?</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <form action="{% url 'delete_kalibrasi' kalibrasi.id %}"
+                                                    <kalibrasi action="{% url 'delete_kalibrasi' kalibrasi.id %}"
                                                         method="POST">
                                                         {% csrf_token %}
                                                         <input type="submit" class="btn btn-primary" value="delete">
-                                                    </form>
+                                                    </kalibrasi>
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Cancel</button>
                                                 </div>
