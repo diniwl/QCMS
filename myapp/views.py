@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect,  get_object_or_404
 from .forms import SignUpForm, LoginForm
 from django.contrib.auth import authenticate, login, logout as django_logout, update_session_auth_hash
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
@@ -42,7 +42,7 @@ def view_login(request):
                 return redirect('home')
             elif user is not None and user.is_tro:
                 login(request, user)
-                return redirect('homefismed')
+                return redirect('home')
             else:
                 msg = 'Invalid credentials'
         else:
@@ -792,6 +792,8 @@ def delete_sertifukes(request, id):
 # SERVICE REPORT
 @login_required
 def home_service(request):
+    if request.user.is_tro:
+        return HttpResponseForbidden("Access Denied! Sorry You Cannot Access This Page")
     service = Service.objects.filter(user=request.user)
     return render(request, 'myapp/service_report/service.html', {
         'service': service
@@ -873,6 +875,8 @@ def delete_service(request, id):
 # PEMELIHARAAN PREVENTIF
 @login_required
 def home_maintenance(request):
+    if request.user.is_tro:
+        return HttpResponseForbidden("Access Denied! Sorry You Cannot Access This Page")
     maintenance = Maintenance.objects.filter(user=request.user)
     return render(request, 'myapp/pm/maintenance.html', {
         'maintenance': maintenance

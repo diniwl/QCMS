@@ -15,6 +15,18 @@
     <script src="https://kit.fontawesome.com/9a207e2b08.js" crossorigin="anonymous"></script>
 </head>
 
+<style>
+    #footer {
+        text-align: center;
+        margin: 1%;
+    }
+
+    .logopoltek {
+        width: 7%;
+        margin: 1% 1%;
+    }
+</style>
+
 <body class="d-flex flex-column min-vh-100">
 
     <!-- Navigation Bar -->
@@ -57,7 +69,7 @@
                         <a class="nav-link" href="{% url 'account_edit' %}">Akun</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'usersguide' %}">Paduan Penggunaan</a>
+                        <a class="nav-link" href="{% url 'usersguide' %}">Paduan Pengguna</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
@@ -91,11 +103,13 @@
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
-
         });
     </script>
-
-
 </body>
+
+<footer id="footer">
+    <img class="logopoltek" src="{% static 'media/logopoltek.png' %}" alt="logopoltek">
+    <p>© Dini Wulandari</p>
+</footer>
 
 </html>
