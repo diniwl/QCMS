@@ -1,26 +1,41 @@
 {% extends 'myapp/base.html' %}
 
 {% block body %}
-    <h3 class="text-center m-4">Add Schedule</h3>
-    {% if success %}
-    <div class="alert alert-success" role="alert">
-        The new schedule created sucessfully.
-        <a href="{% url 'home' %}" class="alert-link">Go to Schedule.</a>
-    </div>
-    {% else %}
-    <div class="row justify-content-center">
-        <div class="col-6">
-            <div class="card bg-secondary mb-3">
-                <div class="card-header">New Schedule</div>
-                <div class="card-body">
-                    <form action="{% url 'add' %}" method="POST">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary">Create</button>
-                        <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>
-                    </form>
-                </div>
+<h3 class="text-center m-4">Add Schedule</h3>
+{% if success %}
+<div class="alert alert-success" role="alert">
+    The new schedule created sucessfully.
+    <a href="{% url 'home' %}" class="alert-link">Go to Schedule.</a>
+</div>
+{% else %}
+<div class="row justify-content-center">
+    <div class="col-6">
+        <div class="card bg-secondary mb-3">
+            <div class="card-header">New Schedule</div>
+            <div class="card-body">
+                <form action="{% url 'add' %}" method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>
+                </form>
             </div>
         </div>
+    </div>
     {% endif %}
-{% endblock %}
+
+
+    <script>
+        // Get today's date
+        var today = new Date();
+
+        // Get the task date from the server-side variable in Django
+        var taskDate = new Date("{{ form.task_date.value }}");
+
+        // Compare the task date with today's date
+        if (taskDate === today) {
+            alert("Task date matches today's date!");
+        }
+    </script>
+    
+    {% endblock %}

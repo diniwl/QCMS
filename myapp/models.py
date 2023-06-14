@@ -270,17 +270,26 @@ class Ukes(models.Model):
     xray_gen_type = models.CharField(max_length=150)
     xray_gen_serial = models.CharField(max_length=150)
 
+    #ILUMINASI
+    lux1 = models.FloatField(max_length=10)
+    lux2 = models.FloatField(max_length=10)
+    lux3 = models.FloatField(max_length=10)
+    lux4 = models.FloatField(max_length=10)
+
     lux_avg = models.FloatField(max_length=10)
     lux_bg = models.FloatField(max_length=10)
     lux_fk = models.FloatField(max_length=10)
     lux_fin = models.FloatField(max_length=10)
 
+    #SELISIH LAPANG KOLIMASI
     delta_x = models.FloatField(max_length=10)
     delta_y = models.FloatField(max_length=10)
     sigma_xy = models.FloatField(max_length=10)
     
+    #KETIDAKLURUSAN BERKAS CAHAYA
     degree = models.FloatField(max_length=10)
 
+    #UJI AKURASI TEGANGAN DAN INFORMASI DATA DOSIS KELUARAN RADIASI
     kv_set1 = models.FloatField(max_length=10)
     kv_set2 = models.FloatField(max_length=10)
     kv_set3 = models.FloatField(max_length=10)
@@ -326,6 +335,7 @@ class Ukes(models.Model):
     kvdose_ma7 = models.FloatField(max_length=10)
     kvdose_ma8 = models.FloatField(max_length=10)
     
+    #UJI AKURASI WAKTU PENYINARAN
     ms_set1 = models.FloatField(max_length=10)
     ms_set2 = models.FloatField(max_length=10)
     ms_set3 = models.FloatField(max_length=10)
@@ -356,6 +366,7 @@ class Ukes(models.Model):
     msdose_ma4 = models.FloatField(max_length=10)
     msdose_ma5 = models.FloatField(max_length=10)
     
+    #UJI LINEARITAS KELUARAN RADIASI
     lin_ma1 = models.FloatField(max_length=10)
     lin_ma2 = models.FloatField(max_length=10)
     lin_ma3 = models.FloatField(max_length=10)
@@ -386,6 +397,7 @@ class Ukes(models.Model):
     lin_cl4 = models.FloatField(max_length=10)
     lin_cl5 = models.FloatField(max_length=10)
 
+    #UJI REPRODUKSIBILITAS TEGANGAN PUNCAK, WAKTU PENYINARAN, DAN DOSIS
     rep_kv_avg = models.FloatField(max_length=10)
     rep_s_avg = models.FloatField(max_length=10)
     rep_dose_avg = models.FloatField(max_length=10)
@@ -398,12 +410,14 @@ class Ukes(models.Model):
     rep_s_cv = models.FloatField(max_length=10)
     rep_dose_cv = models.FloatField(max_length=10)
     
+    #UJI KUALITAS BERKAS SINAR
     al70_ls = models.FloatField(max_length=10)
     al80_ls = models.FloatField(max_length=10)
 
     al70_pr = models.FloatField(max_length=10)
     al80_pr = models.FloatField(max_length=10)
 
+    #UJI KEBOCORAN WADAH TABUNG
     tb_leak_kvset = models.FloatField(max_length=10)
     tb_leak_kvmax = models.FloatField(max_length=10)
     tb_leak_maset = models.FloatField(max_length=10)
@@ -415,6 +429,140 @@ class Ukes(models.Model):
     tb_leak_l = models.FloatField(max_length=10)
     tb_leak_u = models.FloatField(max_length=10)
     tb_leak_bh = models.FloatField(max_length=10)
+
+    #TIMER DARURAT HANYA 3 SENSOR
+    aec_auto_mas = models.FloatField(max_length=10)
+    aec_auto_timer = models.FloatField(max_length=10)
+    aec_lighma_mas = models.FloatField(max_length=10)
+    aec_highma_timer = models.FloatField(max_length=10)
+    
+    #DENSITAS STANDAR DAN UNIFORMITAS
+    aec_mas_val1 = models.FloatField(max_length=10)
+    aec_mas_val2 = models.FloatField(max_length=10)
+    aec_mas_val3 = models.FloatField(max_length=10)
+    aec_mas_val4 = models.FloatField(max_length=10)
+    aec_mas_val5 = models.FloatField(max_length=10)
+    aec_mas_val6 = models.FloatField(max_length=10)
+
+    aec_index_val1 = models.FloatField(max_length=10)
+    aec_index_val2 = models.FloatField(max_length=10)
+    aec_index_val3 = models.FloatField(max_length=10)
+    aec_index_val4 = models.FloatField(max_length=10)
+    aec_index_val5 = models.FloatField(max_length=10)
+    aec_index_val6 = models.FloatField(max_length=10)
+
+    aec_avg_mas_value = models.FloatField(max_length=10)
+    aec_avg_idx_value = models.FloatField(max_length=10)
+
+    aec_dev_mas_val1 = models.FloatField(max_length=10)
+    aec_dev_mas_val2 = models.FloatField(max_length=10)
+    aec_dev_mas_val3 = models.FloatField(max_length=10)
+    aec_dev_mas_val4 = models.FloatField(max_length=10)
+    aec_dev_mas_val5 = models.FloatField(max_length=10)
+    aec_dev_mas_val6 = models.FloatField(max_length=10)
+
+    aec_dev_index_val1 = models.FloatField(max_length=10)
+    aec_dev_index_val2 = models.FloatField(max_length=10)
+    aec_dev_index_val3 = models.FloatField(max_length=10)
+    aec_dev_index_val4 = models.FloatField(max_length=10)
+    aec_dev_index_val5 = models.FloatField(max_length=10)
+    aec_dev_index_val6 = models.FloatField(max_length=10)
+
+    #PENJEJAKAN KVP KONSTAN
+    kvconst_mas_val1 = models.FloatField(max_length=10)
+    kvconst_mas_val2 = models.FloatField(max_length=10)
+    kvconst_mas_val3 = models.FloatField(max_length=10)
+    kvconst_mas_val4 = models.FloatField(max_length=10)
+
+    kvconst_index_val1 = models.FloatField(max_length=10)
+    kvconst_index_val2 = models.FloatField(max_length=10)
+    kvconst_index_val3 = models.FloatField(max_length=10)
+    kvconst_index_val4 = models.FloatField(max_length=10)
+
+    kvconst_avg_mas_value = models.FloatField(max_length=10)
+    kvconst_avg_idx_value = models.FloatField(max_length=10)
+
+    kvconst_dev_mas_val1 = models.FloatField(max_length=10)
+    kvconst_dev_mas_val2 = models.FloatField(max_length=10)
+    kvconst_dev_mas_val3 = models.FloatField(max_length=10)
+    kvconst_dev_mas_val4 = models.FloatField(max_length=10)
+
+    kvconst_dev_index_val1 = models.FloatField(max_length=10)
+    kvconst_dev_index_val2 = models.FloatField(max_length=10)
+    kvconst_dev_index_val3 = models.FloatField(max_length=10)
+    kvconst_dev_index_val4 = models.FloatField(max_length=10)
+
+    #PENJEJAKAN TEBAL KONSTAN
+    thconst_mas_val1 = models.FloatField(max_length=10)
+    thconst_mas_val2 = models.FloatField(max_length=10)
+    thconst_mas_val3 = models.FloatField(max_length=10)
+    thconst_mas_val4 = models.FloatField(max_length=10)
+
+    thconst_index_val1 = models.FloatField(max_length=10)
+    thconst_index_val2 = models.FloatField(max_length=10)
+    thconst_index_val3 = models.FloatField(max_length=10)
+    thconst_index_val4 = models.FloatField(max_length=10)
+
+    thconst_avg_mas_value = models.FloatField(max_length=10)
+    thconst_avg_idx_value = models.FloatField(max_length=10)
+
+    thconst_dev_mas_val1 = models.FloatField(max_length=10)
+    thconst_dev_mas_val2 = models.FloatField(max_length=10)
+    thconst_dev_mas_val3 = models.FloatField(max_length=10)
+    thconst_dev_mas_val4 = models.FloatField(max_length=10)
+
+    thconst_dev_index_val1 = models.FloatField(max_length=10)
+    thconst_dev_index_val2 = models.FloatField(max_length=10)
+    thconst_dev_index_val3 = models.FloatField(max_length=10)
+    thconst_dev_index_val4 = models.FloatField(max_length=10)
+
+    #KOMBINASI TEBAL DAN KVP
+    all_mas_val1 = models.FloatField(max_length=10)
+    all_mas_val2 = models.FloatField(max_length=10)
+    all_mas_val3 = models.FloatField(max_length=10)
+    all_mas_val4 = models.FloatField(max_length=10)
+    all_mas_val5 = models.FloatField(max_length=10)
+    all_mas_val6 = models.FloatField(max_length=10)
+    all_mas_val7 = models.FloatField(max_length=10)
+    all_mas_val8 = models.FloatField(max_length=10)
+
+    all_index_val1 = models.FloatField(max_length=10)
+    all_index_val2 = models.FloatField(max_length=10)
+    all_index_val3 = models.FloatField(max_length=10)
+    all_index_val4 = models.FloatField(max_length=10)
+    all_index_val5 = models.FloatField(max_length=10)
+    all_index_val6 = models.FloatField(max_length=10)
+    all_index_val7 = models.FloatField(max_length=10)
+    all_index_val8 = models.FloatField(max_length=10)
+
+    all_avg_mas_value = models.FloatField(max_length=10)
+
+    all_avg_idx_value = models.FloatField(max_length=10)
+
+    all_dev_mas_val1 = models.FloatField(max_length=10)
+    all_dev_mas_val2 = models.FloatField(max_length=10)
+    all_dev_mas_val3 = models.FloatField(max_length=10)
+    all_dev_mas_val4 = models.FloatField(max_length=10)
+    all_dev_mas_val5 = models.FloatField(max_length=10)
+    all_dev_mas_val6 = models.FloatField(max_length=10)
+    all_dev_mas_val7 = models.FloatField(max_length=10)
+    all_dev_mas_val8 = models.FloatField(max_length=10)
+
+    all_dev_index_val1 = models.FloatField(max_length=10)
+    all_dev_index_val2 = models.FloatField(max_length=10)
+    all_dev_index_val3 = models.FloatField(max_length=10)
+    all_dev_index_val4 = models.FloatField(max_length=10)
+    all_dev_index_val5 = models.FloatField(max_length=10)
+    all_dev_index_val6 = models.FloatField(max_length=10)
+    all_dev_index_val7 = models.FloatField(max_length=10)
+    all_dev_index_val8 = models.FloatField(max_length=10)
+
+    #WAKTU RESPON MINIMUM
+    ms1 = models.FloatField(max_length=10)
+    ms2 = models.FloatField(max_length=10)
+    ms3 = models.FloatField(max_length=10)
+    ms4 = models.FloatField(max_length=10)
+    ms5 = models.FloatField(max_length=10)
 
     is_passed = models.BooleanField('passed', default=False)
     is_failed = models.BooleanField('failed', default=False)

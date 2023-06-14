@@ -349,23 +349,21 @@ class SertifKalibrasiform(forms.ModelForm):
         }
 
 #UKES
+
 class Ukesform(forms.ModelForm):
     class Meta:
         model = Ukes
-        fields = '__all__'
+        exclude = ['user']
         labels = {
             'task_date': 'Scheduled Date',
             'location': 'Location',
             'tech_name': "Technician's Name",
-
             'xray_tube_brand': 'Brand',
             'xray_tube_type': 'Type',
             'xray_tube_serial': 'Serial',
-
             'xray_gen_brand': 'Brand',
             'xray_gen_type': 'Type',
             'xray_gen_serial': 'Serial',
-
             'is_passed' : 'Passed',
             'is_failed' : 'Failed',
         }

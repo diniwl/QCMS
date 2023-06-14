@@ -53,6 +53,8 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th scope="col">Titik Ukur</th>
+                                <th scope="col">Pengukuran</th>
                                 <th scope="col">Rata-rata (Lux)</th>
                                 <th scope="col">Cahaya Latar (Lux)</th>
                                 <th scope="col">FK</th>
@@ -62,14 +64,32 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">{{ form.lux_avg|as_crispy_field }}</th>
-                                <td>{{ form.lux_bg|as_crispy_field }}</td>
-                                <td>{{ form.lux_fk|as_crispy_field }}</td>
-                                <td>{{ form.lux_fin|as_crispy_field }}</td>
-                                <td>≥ 100 Lux</td>
+                                <th scope="row">Area 1</th>
+                                <td>{{ form.lux1|as_crispy_field }}</td>
+                                <td style="vertical-align: middle;" rowspan="4">{{ form.lux_avg|as_crispy_field }}</td>
+                                <td style="vertical-align: middle;" rowspan="4">{{ form.lux_bg|as_crispy_field }}</td>
+                                <td style="vertical-align: middle;" rowspan="4">{{ form.lux_fk|as_crispy_field }}</td>
+                                <td style="vertical-align: middle;" rowspan="4">{{ form.lux_fin|as_crispy_field }}</td>
+                                <td style="vertical-align: middle;" rowspan="4">≥ 100 Lux</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Area 2</th>
+                                <td>{{ form.lux2|as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Area 3</th>
+                                <td>{{ form.lux3|as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Area 4</th>
+                                <td>{{ form.lux4|as_crispy_field }}</td>
                             </tr>
                         </tbody>
                     </table>
+
 
                     <h4>2. Selisih Lapangan Kolimasi Dengan Berkas Sinar-X</h4>
                     <p>kVp-set : 60</p>
@@ -79,7 +99,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">∆x</th>
+                                <th scope="col">x</th>
                                 <th scope="col">∆y</th>
                                 <th scope="col">∆X+∆Y</th>
                                 <th scope="col">Nilai Lolos</th>
@@ -90,7 +110,7 @@
                                 <th scope="row">{{ form.delta_x|as_crispy_field }}</th>
                                 <td>{{ form.delta_y|as_crispy_field }}</td>
                                 <td>{{ form.sigma_xy|as_crispy_field }}</td>
-                                <td>∆X dan ∆Y≤2% SID,
+                                <td>X dan ∆Y≤2% SID,
                                     |∆X|+|∆y|≤3% SID
                                 </td>
                             </tr>
@@ -447,7 +467,7 @@
                         </tbody>
                     </table>
 
-                    <h4>6.	Uji Kebocoran Wadah Tabung
+                    <h4>6. Uji Kebocoran Wadah Tabung
                     </h4>
 
                     <table class="table">
@@ -459,7 +479,7 @@
                                 <th scope="col">mGy/jam</th>
                                 <th scope="col">Nilai lolos uji
                                     (mGy/jam)
-                                    </th>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -505,7 +525,413 @@
                         </tbody>
                     </table>
 
-                    <p>Status Uji Kesesuaian</p>
+                    <h4>7. Kendali Paparan Otomatis (AEC)</h4>
+                    <p>a. Timer Darurat</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Mode/Settting</th>
+                                <th scope="col">mAs</th>
+                                <th scope="col">Timer(s)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="col">Otomatis</th>
+                                <td>{{ form.aec_auto_mas |as_crispy_field }}</td>
+                                <td>{{ form.aec_auto_timer |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="col">mA Tinggi</th>
+                                <td>{{ form.aec_lighma_mas |as_crispy_field }}</td>
+                                <td>{{ form.aec_highma_timer |as_crispy_field }}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                    <p>b. Densitas Standar dan Uniforrmitas</p>
+                    <p>Tutup kolimator dengan 21 mmAl atau 2 mm Cu</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" scope="col">Sensor AEC</th>
+                                <th colspan="2" rowspan="2" scope="col">Terukur</th>
+                                <th colspan="2" rowspan="2" scope="col">Rerata</th>
+                                <th colspan="2" rowspan="2" scope="col">Deviasi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th></th>
+                                <td>mAs</td>
+                                <td>Indeks Paparan</td>
+
+                                <td>mAs</td>
+                                <td>Indeks Paparan</td>
+
+                                <td>mAs</td>
+                                <td>Indeks Paparan</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">1 aktif, 2 dan 3 non aktif</th>
+
+                                <td>{{ form.aec_mas_val1 |as_crispy_field }}</td>
+                                <td>{{ form.aec_index_val1 |as_crispy_field }}</td>
+
+                                <td style="vertical-align: middle;" rowspan="6">{{ form.aec_avg_mas_value |as_crispy_field }}</td>
+                                <td style="vertical-align: middle;" rowspan="6">{{ form.aec_avg_idx_value |as_crispy_field }}</td>
+
+                                <td>{{ form.aec_dev_mas_val1 |as_crispy_field }}</td>
+                                <td>{{ form.aec_dev_index_val1 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">2 aktif, 1 dan 3 non aktif</th>
+                                <td>{{ form.aec_mas_val2 |as_crispy_field }}</td>
+                                <td>{{ form.aec_index_val2 |as_crispy_field }}</td>
+
+                                <td>{{ form.aec_dev_mas_val2 |as_crispy_field }}</td>
+                                <td>{{ form.aec_dev_index_val2 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">3 aktif, 1 dan 2 non aktif</th>
+                                <td>{{ form.aec_mas_val3 |as_crispy_field }}</td>
+                                <td>{{ form.aec_index_val3 |as_crispy_field }}</td>
+
+                                <td>{{ form.aec_dev_mas_val3 |as_crispy_field }}</td>
+                                <td>{{ form.aec_dev_index_val3 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">1 dan 2 aktif, 3 non aktif</th>
+                                <td>{{ form.aec_mas_val4 |as_crispy_field }}</td>
+                                <td>{{ form.aec_index_val4 |as_crispy_field }}</td>
+
+                                <td>{{ form.aec_dev_mas_val4 |as_crispy_field }}</td>
+                                <td>{{ form.aec_dev_index_val4 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">1 dan 3 aktif, 2 non aktif</th>
+                                <td>{{ form.aec_mas_val5 |as_crispy_field }}</td>
+                                <td>{{ form.aec_index_val5 |as_crispy_field }}</td>
+
+                                <td>{{ form.aec_dev_mas_val5 |as_crispy_field }}</td>
+                                <td>{{ form.aec_dev_index_val5 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">2 dan 3 aktif, 1 non aktif</th>
+                                <td>{{ form.aec_mas_val6 |as_crispy_field }}</td>
+                                <td>{{ form.aec_index_val6 |as_crispy_field }}</td>
+
+                                <td>{{ form.aec_dev_mas_val6 |as_crispy_field }}</td>
+                                <td>{{ form.aec_dev_index_val6 |as_crispy_field }}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
+                    <p>c. Penjejakan </p>
+                    <p>Variasi ketebalan fantom (tegangan tetap)</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" scope="col">Ketebalan Phantom</th>
+                                <th colspan="2" rowspan="2" scope="col">Tercatat</th>
+                                <th colspan="2" rowspan="2" scope="col">Rerata</th>
+                                <th colspan="2" rowspan="2" scope="col">Deviasi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th></th>
+                                <td>mAs</td>
+                                <td>Indeks Paparan</td>
+
+                                <td>mAs</td>
+                                <td>Indeks Paparan</td>
+
+                                <td>mAs</td>
+                                <td>Indeks Paparan</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">10 cm</th>
+
+                                <td>{{ form.thconst_mas_val1 |as_crispy_field }}</td>
+                                <td>{{ form.thconst_index_val1 |as_crispy_field }}</td>
+
+                                <td style="vertical-align: middle;" rowspan="4">{{ form.thconst_avg_mas_value |as_crispy_field }}</td>
+                                <td style="vertical-align: middle;" rowspan="4">{{ form.thconst_avg_idx_value |as_crispy_field }}</td>
+
+                                <td>{{ form.thconst_dev_mas_val1 |as_crispy_field }}</td>
+                                <td>{{ form.thconst_dev_index_val1 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">14 cm</th>
+
+                                <td>{{ form.thconst_mas_val2 |as_crispy_field }}</td>
+                                <td>{{ form.thconst_index_val2 |as_crispy_field }}</td>
+
+                                <td>{{ form.thconst_dev_mas_val2 |as_crispy_field }}</td>
+                                <td>{{ form.thconst_dev_index_val2 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">20 cm</th>
+
+                                <td>{{ form.thconst_mas_val3 |as_crispy_field }}</td>
+                                <td>{{ form.thconst_index_val3 |as_crispy_field }}</td>
+
+                                <td>{{ form.thconst_dev_mas_val3 |as_crispy_field }}</td>
+                                <td>{{ form.thconst_dev_index_val3 |as_crispy_field }}</td>
+                            </tr>
+
+
+                            <tr>
+                                <th scope="row">24 cm</th>
+
+                                <td>{{ form.thconst_mas_val4 |as_crispy_field }}</td>
+                                <td>{{ form.thconst_index_val4 |as_crispy_field }}</td>
+
+                                <td>{{ form.thconst_dev_mas_val4 |as_crispy_field }}</td>
+                                <td>{{ form.thconst_dev_index_val4 |as_crispy_field }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <p>Variasi tegangan (pada ketebalan fantom=20 cm)</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" scope="col">Tegangan (kVp)</th>
+                                <th colspan="2" rowspan="2" scope="col">Tercatat</th>
+                                <th colspan="2" rowspan="2" scope="col">Rerata</th>
+                                <th colspan="2" rowspan="2" scope="col">Deviasi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th></th>
+                                <td>mAs</td>
+                                <td>Indeks Paparan</td>
+
+                                <td>mAs</td>
+                                <td>Indeks Paparan</td>
+
+                                <td>mAs</td>
+                                <td>Indeks Paparan</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">70</th>
+
+                                <td>{{ form.kvconst_mas_val1 |as_crispy_field }}</td>
+                                <td>{{ form.kvconst_index_val1 |as_crispy_field }}</td>
+
+                                <td style="vertical-align: middle;" rowspan="4">{{ form.kvconst_avg_mas_value |as_crispy_field }}</td>
+                                <td style="vertical-align: middle;" rowspan="4">{{ form.kvconst_avg_idx_value |as_crispy_field }}</td>
+
+                                <td>{{ form.kvconst_dev_mas_val1 |as_crispy_field }}</td>
+                                <td>{{ form.kvconst_dev_index_val1 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">80</th>
+
+                                <td>{{ form.kvconst_mas_val2 |as_crispy_field }}</td>
+                                <td>{{ form.kvconst_index_val2 |as_crispy_field }}</td>
+
+                                <td>{{ form.kvconst_dev_mas_val2 |as_crispy_field }}</td>
+                                <td>{{ form.kvconst_dev_index_val2 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">90</th>
+
+                                <td>{{ form.kvconst_mas_val3 |as_crispy_field }}</td>
+                                <td>{{ form.kvconst_index_val3 |as_crispy_field }}</td>
+
+                                <td>{{ form.kvconst_dev_mas_val3 |as_crispy_field }}</td>
+                                <td>{{ form.kvconst_dev_index_val3 |as_crispy_field }}</td>
+                            </tr>
+
+
+                            <tr>
+                                <th scope="row">100</th>
+
+                                <td>{{ form.kvconst_mas_val4 |as_crispy_field }}</td>
+                                <td>{{ form.kvconst_index_val4 |as_crispy_field }}</td>
+
+                                <td>{{ form.kvconst_dev_mas_val4 |as_crispy_field }}</td>
+                                <td>{{ form.kvconst_dev_index_val4 |as_crispy_field }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>Kombinasi kVp dan ketebalan fantom</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" scope="col">kVp dan tebal fantom</th>
+                                <th colspan="2" rowspan="2" scope="col">Tercatat</th>
+                                <th colspan="2" rowspan="2" scope="col">Rerata</th>
+                                <th colspan="2" rowspan="2" scope="col">Deviasi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th></th>
+                                <td>mAs</td>
+                                <td>Indeks Paparan</td>
+
+                                <td>mAs</td>
+                                <td>Indeks Paparan</td>
+
+                                <td>mAs</td>
+                                <td>Indeks Paparan</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">60 kVp dan 10 cm</th>
+
+                                <td>{{ form.all_mas_val1 |as_crispy_field }}</td>
+                                <td>{{ form.all_index_val1 |as_crispy_field }}</td>
+
+                                <td style="vertical-align: middle;" rowspan="8">{{ form.all_avg_mas_value |as_crispy_field }}</td>
+                                <td style="vertical-align: middle;" rowspan="8">{{ form.all_avg_idx_value |as_crispy_field }}</td>
+
+                                <td>{{ form.all_dev_mas_val1 |as_crispy_field }}</td>
+                                <td>{{ form.all_dev_index_val1 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">60 kVp dan 15 cm</th>
+
+                                <td>{{ form.all_mas_val2 |as_crispy_field }}</td>
+                                <td>{{ form.all_index_val2 |as_crispy_field }}</td>
+
+                                <td>{{ form.all_dev_mas_val2 |as_crispy_field }}</td>
+                                <td>{{ form.all_dev_index_val2 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">80 kVp dan 15 cm</th>
+
+                                <td>{{ form.all_mas_val3 |as_crispy_field }}</td>
+                                <td>{{ form.all_index_val3 |as_crispy_field }}</td>
+
+                                <td>{{ form.all_dev_mas_val3 |as_crispy_field }}</td>
+                                <td>{{ form.all_dev_index_val3 |as_crispy_field }}</td>
+                            </tr>
+
+
+                            <tr>
+                                <th scope="row">80 kVp dan 20 cm</th>
+
+                                <td>{{ form.all_mas_val4 |as_crispy_field }}</td>
+                                <td>{{ form.all_index_val4 |as_crispy_field }}</td>
+
+                                <td>{{ form.all_dev_mas_val4 |as_crispy_field }}</td>
+                                <td>{{ form.all_dev_index_val4 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">100 kVp dan 15 cm</th>
+
+                                <td>{{ form.all_mas_val5 |as_crispy_field }}</td>
+                                <td>{{ form.all_index_val5 |as_crispy_field }}</td>
+
+                                <td>{{ form.all_dev_mas_val5 |as_crispy_field }}</td>
+                                <td>{{ form.all_dev_index_val5 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">100 kVp dan 20 cm</th>
+
+                                <td>{{ form.all_mas_val6 |as_crispy_field }}</td>
+                                <td>{{ form.all_index_val6 |as_crispy_field }}</td>
+
+                                <td>{{ form.all_dev_mas_val6 |as_crispy_field }}</td>
+                                <td>{{ form.all_dev_index_val6 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">120 kVp dan 15 cm</th>
+
+                                <td>{{ form.all_mas_val7 |as_crispy_field }}</td>
+                                <td>{{ form.all_index_val7 |as_crispy_field }}</td>
+
+                                <td>{{ form.all_dev_mas_val7 |as_crispy_field }}</td>
+                                <td>{{ form.all_dev_index_val7 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">1120 kVp dan 25 cm</th>
+
+                                <td>{{ form.all_mas_val8 |as_crispy_field }}</td>
+                                <td>{{ form.all_index_val8 |as_crispy_field }}</td>
+
+                                <td>{{ form.all_dev_mas_val8 |as_crispy_field }}</td>
+                                <td>{{ form.all_dev_index_val8 |as_crispy_field }}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                    <p>d. Waktu Respoon Minimum</p>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Pengurangan fantom</th>
+                                <th scope="col">Waktu (ms)</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>{{ form.ms1 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>{{ form.ms2 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>{{ form.ms3 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>{{ form.ms4 |as_crispy_field }}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">5</th>
+                                <td>{{ form.ms5 |as_crispy_field }}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
 
                     <div class="row">
                         <div class="mb-3 col-md-6 mb-0">
@@ -517,7 +943,7 @@
                             {{ form.is_failed|as_crispy_field }}
                         </div>
                     </div>
-                    
+
                     <button type="submit" class="btn btn-primary">Create</button>
                     <a href="{% url 'home_ukes' %}" class="btn btn-secondary">Cancel</a>
                 </form>
