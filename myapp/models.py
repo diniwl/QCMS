@@ -27,6 +27,7 @@ class Schedule(models.Model):
     task = models.CharField(max_length=150)
     machine = models.CharField(max_length=150)
     location = models.CharField(max_length=150)
+    time = models.TimeField(max_length=150)
 
 # UJI PENERIMAAN
 class Penerimaan(models.Model):

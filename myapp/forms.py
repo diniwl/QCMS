@@ -23,18 +23,20 @@ class SignUpForm(UserCreationForm):
 class Scheduleform(forms.ModelForm):
     class Meta:
         model = Schedule
-        fields = ['task_date', 'task', 'machine', 'location']
+        fields = ['task_date', 'task', 'machine', 'location', 'time']
         labels = {
             'task_date': 'Scheduled Date',
             'task': 'Task',
             'machine': 'Machine',
             'location': 'Location',
+            'time': 'Time',
         }
         widgets = {
             'task_date': forms.DateInput(attrs={'class': 'form-control'}),
             'task': forms.TextInput(attrs={'class': 'form-control'}), 
             'machine': forms.TextInput(attrs={'class': 'form-control'}), 
-            'location': forms.TextInput(attrs={'class': 'form-control'})
+            'location': forms.TextInput(attrs={'class': 'form-control'}),
+            'time': forms.TimeInput(attrs={'class': 'form-control'}),
         }
 
 #UJI PENERIMAAN

@@ -5,9 +5,13 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidde
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
+import pytz
 
 from .models import Schedule, Penerimaan, Kalibrasi, Ukes, Service, Sertifkalibrasi, Sertifukes, User, Maintenance
 from .forms import Scheduleform, Penerimaanform, Kalibrasiform, Ukesform, Serviceform, SertifKalibrasiform, Sertifukesform, Maintenanceform
+from datetime import datetime, timedelta
+from django.http import JsonResponse
+from django.utils import timezone
 
 # Create your views here.
 
@@ -98,21 +102,23 @@ def add(request):
             new_task = form.cleaned_data['task']
             new_machine = form.cleaned_data['machine']
             new_location = form.cleaned_data['location']
+            new_time = form.cleaned_data['time']
 
             new_schedule = Schedule(
                 user=request.user,
-                task_date = new_task_date,
-                task = new_task,
-                machine = new_machine,
-                location = new_location,
+                task_date=new_task_date,
+                task=new_task,
+                machine=new_machine,
+                location=new_location,
+                time=new_time,
             )
-            new_schedule.save()
+            new_schedule.save()       
             return render(request, 'myapp/schedule/add.html', {
                 'form': Scheduleform(),
                 'success': True
             })
     else:
-        form = Scheduleform(),
+        form = Scheduleform()
     return render(request, 'myapp/schedule/add.html', {
         'form': Scheduleform()
     })
@@ -140,9 +146,37 @@ def delete(request, id):
         schedule.delete()
     return HttpResponseRedirect(reverse('home'))
 
+
+#NOTIFICATION
+def check_notification(request):
+    # Get the current date and time in the server's timezone
+    current_datetime = timezone.now()
+
+    # Convert the timezone to Indonesia's timezone
+    indonesia_tz = pytz.timezone('Asia/Jakarta')
+    current_datetime = current_datetime.astimezone(indonesia_tz)
+
+    # Query the tasks that match the current date and time
+    matching_tasks = Schedule.objects.filter(task_date=current_datetime.date(), time__lte=current_datetime.time())
+
+    # Prepare the response data
+    response_data = {
+        'has_notification': False,
+        'message': '',
+    }
+
+    if matching_tasks:
+        response_data['has_notification'] = True
+        response_data['message'] = 'Ada pekerjaan yang harus dilakukan hari ini'
+
+    return JsonResponse(response_data)
+
+
 # UJI PENERIMAAN
 @login_required
 def home_penerimaan(request):
+    if request.user.is_tro:
+        return HttpResponseForbidden("Access Denied! Sorry You Cannot Access This Page")
     penerimaan = Penerimaan.objects.filter(user=request.user)
     return render(request, 'myapp/acceptance/penerimaan.html', {
         'penerimaan': penerimaan

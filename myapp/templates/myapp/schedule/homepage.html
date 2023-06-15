@@ -17,6 +17,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">Date</th>
+                                <th scope="col">Time</th>
                                 <th scope="col">Task</th>
                                 <th scope="col">Machine</th>
                                 <th scope="col">Location</th>
@@ -28,6 +29,7 @@
                             <tr>
                                 <!-- from models.py -->
                                 <td>{{schedule.task_date}}</td>
+                                <td>{{schedule.time}}</td>
                                 <td>{{schedule.task}}</td>
                                 <td>{{schedule.machine}}</td>
                                 <td>{{schedule.location}}</td>
@@ -54,6 +56,7 @@
                                                 <div class="modal-body">
                                                     <ul class="list-unlysted">
                                                         <li>Date: <strong>{{schedule.task_date}}</strong></li>
+                                                        <li>Date: <strong>{{schedule.time}}</strong></li>
                                                         <li>Task: <strong>{{schedule.task}}</strong></li>
                                                         <li>Machine: <strong>{{schedule.machine}}</strong></li>
                                                         <li>Location: <strong>{{schedule.location}}</strong>

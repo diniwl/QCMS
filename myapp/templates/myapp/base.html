@@ -94,6 +94,8 @@
         crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.js"
         integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
     <script>
         $(document).ready(function () {
@@ -105,6 +107,26 @@
             });
         });
     </script>
+
+    <script>
+        // Function to check if a notification needs to be shown
+        function checkNotification() {
+            // Send an AJAX request to the server to check for new notifications
+            $.ajax({
+                url: "{% url 'check_notification' %}",
+                type: "GET",
+                success: function (data) {
+                    if (data.has_notification) {
+                        // Display the notification
+                        window.alert(data.message);
+                    }
+                }
+            });
+        }
+        // Check for new notifications every one hour
+        setInterval(checkNotification, 60 * 60 * 1000);
+    </script>
+
 </body>
 
 <footer id="footer">

@@ -21,6 +21,9 @@ urlpatterns = [
     path('edit/<int:id>/', views.edit, name='edit'),
     path('delete/<int:id>/', views.delete, name='delete'),
 
+    #NOTIFICATION
+    path('check_notification', views.check_notification, name='check_notification'),
+
     #UJI PENERIMAAN
     path('home_penerimaan', views.home_penerimaan, name='home_penerimaan'),
     path('<int:id>', views.view_penerimaan, name='view_penerimaan'),

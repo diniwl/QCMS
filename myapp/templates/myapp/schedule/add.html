@@ -4,7 +4,7 @@
 <h3 class="text-center m-4">Add Schedule</h3>
 {% if success %}
 <div class="alert alert-success" role="alert">
-    The new schedule created sucessfully.
+    The new schedule created successfully.
     <a href="{% url 'home' %}" class="alert-link">Go to Schedule.</a>
 </div>
 {% else %}
@@ -13,7 +13,7 @@
         <div class="card bg-secondary mb-3">
             <div class="card-header">New Schedule</div>
             <div class="card-body">
-                <form action="{% url 'add' %}" method="POST">
+                <form action="{% url 'add' %}" method="POST" id="task-form">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <button type="submit" class="btn btn-primary">Create</button>
@@ -22,20 +22,29 @@
             </div>
         </div>
     </div>
-    {% endif %}
+</div>
+{% endif %}
+{% endblock %}
 
+{% block extra_scripts %}
+<script>
+    $(document).ready(function () {
+        // Submit the form using AJAX
+        $("#task-form").submit(function (event) {
+            event.preventDefault();
+            var form = $(this);
+            var url = form.attr("action");
+            var formData = form.serialize();
 
-    <script>
-        // Get today's date
-        var today = new Date();
-
-        // Get the task date from the server-side variable in Django
-        var taskDate = new Date("{{ form.task_date.value }}");
-
-        // Compare the task date with today's date
-        if (taskDate === today) {
-            alert("Task date matches today's date!");
-        }
-    </script>
-    
-    {% endblock %}
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: formData,
+                success: function (data) {
+                    // Handle the response
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
